@@ -75,7 +75,7 @@ var nicEditorInstance = bkClass.extend({
 	
 	getRng : function() {
 		var s = this.getSel();
-		if(!s) { return null; }
+		if(!s || s.rangeCount === 0) { return; }
 		return (s.rangeCount > 0) ? s.getRangeAt(0) : s.createRange();
 	},
 	
@@ -90,6 +90,7 @@ var nicEditorInstance = bkClass.extend({
 	
 	selElm : function() {
 		var r = this.getRng();
+		if(!r) { return; }
 		if(r.startContainer) {
 			var contain = r.startContainer;
 			if(r.cloneContents().childNodes.length == 1) {
@@ -126,7 +127,7 @@ var nicEditorInstance = bkClass.extend({
 	},
 	
 	selected : function(e,t) {
-		if(!t) {t = this.selElm()}
+		if(!t && !(t = this.selElm)) { t = this.selElm(); }
 		if(!e.ctrlKey) {
 			var selInstance = this.ne.selectedInstance;
 			if(selInstance != this) {
