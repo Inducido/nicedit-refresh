@@ -17,7 +17,7 @@ var nicUploadOptions = {
 /* END CONFIG */
 
 var nicUploadButton = nicEditorAdvancedButton.extend({	
-	nicURI : 'http://api.imgur.com/2/upload.json',
+	nicURI : 'https://api.imgur.com/3/image',
   errorText : 'Failed to upload image',
 
 	addPane : function() {
@@ -63,22 +63,26 @@ var nicUploadButton = nicEditorAdvancedButton.extend({
 
     var fd = new FormData(); // https://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
     fd.append("image", file);
-    fd.append("key", "b7ea18a4ecbda8e92203fa4968d10660");
+
     var xhr = new XMLHttpRequest();
     xhr.open("POST", this.ne.options.uploadURI || this.nicURI);
 
     xhr.onload = function() {
       try {
-        var res = JSON.parse(xhr.responseText);
+        var data = JSON.parse(xhr.responseText).data;
       } catch(e) {
         return this.onError();
       }
-      this.onUploaded(res.upload);
+      if(data.error) {
+        return this.onError(data.error);
+      }
+      this.onUploaded(data);
     }.closure(this);
     xhr.onerror = this.onError.closure(this);
     xhr.upload.onprogress = function(e) {
       this.setProgress(e.loaded / e.total);
     }.closure(this);
+    xhr.setRequestHeader('Authorization', 'Client-ID c37fc05199a05b7');
     xhr.send(fd);
   },
 
@@ -93,7 +97,7 @@ var nicUploadButton = nicEditorAdvancedButton.extend({
 
   onUploaded : function(options) {
     this.removePane();
-    var src = options.links.original;
+    var src = options.link;
     if(!this.im) {
       this.ne.selectedInstance.restoreRng();
       var tmp = 'javascript:nicImTemp();';
@@ -104,7 +108,7 @@ var nicUploadButton = nicEditorAdvancedButton.extend({
     if(this.im) {
       this.im.setAttributes({
         src : src,
-        width : (w && options.image.width) ? Math.min(w, options.image.width) : ''
+        width : (w && options.width) ? Math.min(w, options.width) : ''
       });
     }
   }
