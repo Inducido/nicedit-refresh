@@ -72,10 +72,12 @@ var nicEditor = bkClass.extend({
 
 	addInstance : function(e,o) {
 		e = this.checkReplace($BK(e));
-		if( e.contentEditable || !!window.opera ) {
-			var newInstance = new nicEditorInstance(e,o,this);
-		} else {
-			var newInstance = new nicEditorIFrameInstance(e,o,this);
+    if(e){
+            if( e.contentEditable || !!window.opera ) {
+                var newInstance = new nicEditorInstance(e,o,this);
+            } else {
+                var newInstance = new nicEditorIFrameInstance(e,o,this);
+        }
 		}
 		this.nicInstances.push(newInstance);
 		return this;

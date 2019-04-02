@@ -32,6 +32,7 @@ var bkElement = bkClass.extend({
 	},
 	
 	appendBefore : function(elm) {
+    if(elm)
 		elm.parentNode.insertBefore(this,elm);	
 		return this;
 	},
