@@ -1,0 +1,26 @@
+{
+  "name": "nicedit",
+  "version": "1.0.0",
+  "author": {
+    "name": "Nadir Boussoukaia",
+    "email": "nad4reg@gmail.com",
+    "url": "http://inducido.com"
+  },
+  "license": "MIT",
+  "description": "Simple, Fast WISYWIG editor",
+  "keywords": [
+    "wysiwyg",
+    "editor"
+  ],
+  "main": "src/nicLicense.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Inducido/nicedit-refresh.git"
+  },
+  "bugs": "https://github.com/Inducido/nicedit-refresh/issues",
+  "homepage": "http://nicedit.com",
+  "devDependencies": {
+    "gulp": "3.*",
+    "gulp-concat": "*"
+  }
+}
