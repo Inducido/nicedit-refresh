@@ -15,6 +15,19 @@ It needs to be maintained.
 And we refreshed it a bit so we share the code.
 
 
+## Installing
+
+Usual stuff:
+
+``` bash
+git clone https://github.com/Inducido/nicedit-refresh.git
+npm install
+gulp
+```
+
+Output in dist/ folder.
+
+
 ## Core modules
 
 ```
