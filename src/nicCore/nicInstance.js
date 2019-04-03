@@ -76,7 +76,13 @@ var nicEditorInstance = bkClass.extend({
 	getRng : function() {
 		var s = this.getSel();
 		if(!s || s.rangeCount === 0) { return; }
-		return (s.rangeCount > 0) ? s.getRangeAt(0) : s.createRange();
+
+		//an exception can occur when on a double click some text gets selected unintentionally
+		try{
+			//return (s.rangeCount > 0) ? s.getRangeAt(0) : s.createRange();
+			return (s.rangeCount > 0) ? s.getRangeAt(0) : s.addRange();
+		}
+		catch(e){}
 	},
 	
 	selRng : function(rng,s) {

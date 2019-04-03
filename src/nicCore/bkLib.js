@@ -223,7 +223,7 @@ var bkEvent = {
 };
 
 function __(s) {
-	return s;
+	return (typeof l10n === 'undefined' || l10n[s] === undefined) ? s : l10n[s];
 }
 
 Function.prototype.closure = function() {

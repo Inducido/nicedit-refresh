@@ -51,6 +51,7 @@ var nicEditorButton = bkClass.extend({
 	
 	checkNodes : function(e) {
 		var elm = e;	
+		if(!e) return;
 		do {
 			if(this.options.tags && bkLib.inArray(this.options.tags,elm.nodeName)) {
 				this.activate();

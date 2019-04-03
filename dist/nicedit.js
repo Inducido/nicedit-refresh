@@ -39,6 +39,7 @@ var bkElement = bkClass.extend({
 	},
 	
 	appendBefore : function(elm) {
+    if(elm)
 		elm.parentNode.insertBefore(this,elm);	
 		return this;
 	},
@@ -229,7 +230,7 @@ var bkEvent = {
 };
 
 function __(s) {
-	return s;
+	return (l10n[s] === undefined) ? s : l10n[s];
 }
 
 Function.prototype.closure = function() {
@@ -347,10 +348,12 @@ var nicEditor = bkClass.extend({
 
 	addInstance : function(e,o) {
 		e = this.checkReplace($BK(e));
-		if( e.contentEditable || !!window.opera ) {
-			var newInstance = new nicEditorInstance(e,o,this);
-		} else {
-			var newInstance = new nicEditorIFrameInstance(e,o,this);
+    if(e){
+            if( e.contentEditable || !!window.opera ) {
+                var newInstance = new nicEditorInstance(e,o,this);
+            } else {
+                var newInstance = new nicEditorIFrameInstance(e,o,this);
+        }
 		}
 		this.nicInstances.push(newInstance);
 		return this;
@@ -405,7 +408,7 @@ var nicEditor = bkClass.extend({
 	selectCheck : function(e,t) {
 		var found = false;
 		do{
-			if(t.className && t.className.indexOf('nicEdit') != -1) {
+			if(t.className && (typeof t.className == "string") && t.className.indexOf('nicEdit') != -1) {
 				return false;
 			}
 		} while(t = t.parentNode);
@@ -417,6 +420,7 @@ var nicEditor = bkClass.extend({
 	
 });
 nicEditor = nicEditor.extend(bkEvent);
+
 /**
  * NicEdit Instance
  * This class creates an editable area out of any block level node and converting textarea nodes into editable areas. Instances of this class use the contentEditable attribute and besides textareas do not modify the orginal node.
@@ -495,7 +499,13 @@ var nicEditorInstance = bkClass.extend({
 	getRng : function() {
 		var s = this.getSel();
 		if(!s || s.rangeCount === 0) { return; }
-		return (s.rangeCount > 0) ? s.getRangeAt(0) : s.createRange();
+
+		//an exception can occur when on a double click some text gets selected unintentionally
+		try{
+			//return (s.rangeCount > 0) ? s.getRangeAt(0) : s.createRange();
+			return (s.rangeCount > 0) ? s.getRangeAt(0) : s.addRange();
+		}
+		catch(e){}
 	},
 	
 	selRng : function(rng,s) {
@@ -772,6 +782,7 @@ var nicEditorButton = bkClass.extend({
 	
 	checkNodes : function(e) {
 		var elm = e;	
+		if(!e) return;
 		do {
 			if(this.options.tags && bkLib.inArray(this.options.tags,elm.nodeName)) {
 				this.activate();
