@@ -13,7 +13,7 @@ bkClass.extend = function(def) {
   var proto = new this(bkClass);
   bkExtend(proto,def);
   classDef.prototype = proto;
-  classDef.extend = this.extend;      
+  classDef.extend = this.extend;
   return classDef;
 };
 
@@ -25,28 +25,28 @@ var bkElement = bkClass.extend({
 		elm = $BK(elm);
 		return elm;
 	},
-	
+
 	appendTo : function(elm) {
-		elm.appendChild(this);	
+		elm.appendChild(this);
 		return this;
 	},
-	
+
 	appendBefore : function(elm) {
     if(elm)
-		elm.parentNode.insertBefore(this,elm);	
+		elm.parentNode.insertBefore(this,elm);
 		return this;
 	},
-	
+
 	addEvent : function(type, fn) {
 		bkLib.addEvent(this,type,fn);
-		return this;	
+		return this;
 	},
-	
+
 	setContent : function(c) {
 		this.innerHTML = c;
 		return this;
 	},
-	
+
 	pos : function() {
 		var curleft = curtop = 0;
 		var o = obj = this;
@@ -59,12 +59,12 @@ var bkElement = bkClass.extend({
 		var b = (!window.opera) ? parseInt(this.getStyle('border-width') || this.style.border) || 0 : 0;
 		return [curleft+b,curtop+b+this.offsetHeight];
 	},
-	
+
 	noSelect : function() {
 		bkLib.noSelect(this);
 		return this;
 	},
-	
+
 	parentTag : function(t) {
 		var elm = this;
 		 do {
@@ -75,16 +75,16 @@ var bkElement = bkClass.extend({
 		} while(elm);
 		return false;
 	},
-	
+
 	hasClass : function(cls) {
 		return this.className.match(new RegExp('(\\s|^)nicEdit-'+cls+'(\\s|$)'));
 	},
-	
+
 	addClass : function(cls) {
 		if (!this.hasClass(cls)) { this.className += " nicEdit-"+cls };
 		return this;
 	},
-	
+
 	removeClass : function(cls) {
 		if (this.hasClass(cls)) {
 			this.className = this.className.replace(new RegExp('(\\s|^)nicEdit-'+cls+'(\\s|$)'),' ');
@@ -101,7 +101,7 @@ var bkElement = bkClass.extend({
 					break;
 				case 'opacity':
 					elmStyle.opacity = st[itm];
-					elmStyle.filter = "alpha(opacity=" + Math.round(st[itm]*100) + ")"; 
+					elmStyle.filter = "alpha(opacity=" + Math.round(st[itm]*100) + ")";
 					break;
 				case 'className':
 					this.className = st[itm];
@@ -109,23 +109,23 @@ var bkElement = bkClass.extend({
 				default:
 					//if(document.compatMode || itm != "cursor") { // Nasty Workaround for IE 5.5
 						elmStyle[itm] = st[itm];
-					//}		
+					//}
 			}
 		}
 		return this;
 	},
-	
+
 	getStyle : function( cssRule, d ) {
-		var doc = (!d) ? document.defaultView : d; 
+		var doc = (!d) ? document.defaultView : d;
 		if(this.nodeType == 1)
 		return (doc && doc.getComputedStyle) ? doc.getComputedStyle( this, null ).getPropertyValue(cssRule) : this.currentStyle[ bkLib.camelize(cssRule) ];
 	},
-	
+
 	remove : function() {
 		this.parentNode.removeChild(this);
-		return this;	
+		return this;
 	},
-	
+
 	setAttributes : function(at) {
 		for(var itm in at) {
 			this[itm] = at[itm];
@@ -136,17 +136,17 @@ var bkElement = bkClass.extend({
 
 var bkLib = {
 	isMSIE : (navigator.appVersion.indexOf("MSIE") != -1),
-	
+
 	addEvent : function(obj, type, fn) {
-		(obj.addEventListener) ? obj.addEventListener( type, fn, false ) : obj.attachEvent("on"+type, fn);	
+		(obj.addEventListener) ? obj.addEventListener( type, fn, false ) : obj.attachEvent("on"+type, fn);
 	},
-	
+
 	toArray : function(iterable) {
 		var length = iterable.length, results = new Array(length);
     	while (length--) { results[length] = iterable[length] };
-    	return results;	
+    	return results;
 	},
-	
+
 	noSelect : function(element) {
 		if(element.setAttribute && element.nodeName.toLowerCase() != 'input' && element.nodeName.toLowerCase() != 'textarea') {
 			element.setAttribute('unselectable','on');
@@ -166,7 +166,7 @@ var bkLib = {
 			if(arr[i] == itm)
 				return i;
 		}
-		return null;	
+		return null;
 	},
 	cancelEvent : function(e) {
 		e = e || window.event;
@@ -219,7 +219,7 @@ var bkEvent = {
 				this.eventList[evType][i].apply(this,args);
 			}
 		}
-	}	
+	}
 };
 
 function __(s) {
@@ -230,13 +230,13 @@ Function.prototype.closure = function() {
   var __method = this, args = bkLib.toArray(arguments), obj = args.shift();
   return function() { if(typeof(bkLib) != 'undefined') { return __method.apply(obj,args.concat(bkLib.toArray(arguments))); } };
 }
-	
+
 Function.prototype.closureListener = function() {
-  	var __method = this, args = bkLib.toArray(arguments), object = args.shift(); 
-  	return function(e) { 
+  	var __method = this, args = bkLib.toArray(arguments), object = args.shift();
+  	return function(e) {
   	e = e || window.event;
   	if(e.target) { var target = e.target; } else { var target =  e.srcElement };
-	  	return __method.apply(object, [e,target].concat(args) ); 
+	  	return __method.apply(object, [e,target].concat(args) );
 	};
-}		
+}
 

@@ -5,13 +5,13 @@
  * @author: Brian Kirchoff
  * @version: 0.9.0
  */
- 
+
 var nicEditorAdvancedButton = nicEditorButton.extend({
-	
+
 	init : function() {
-		this.ne.addEvent('selected',this.removePane.closure(this)).addEvent('blur',this.removePane.closure(this));	
+		this.ne.addEvent('selected',this.removePane.closure(this)).addEvent('blur',this.removePane.closure(this));
 	},
-	
+
 	mouseClick : function() {
 		if(!this.isDisabled) {
 			if(this.pane && this.pane.pane) {
@@ -23,12 +23,12 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 			}
 		}
 	},
-	
+
 	addForm : function(f,elm) {
 		this.form = new bkElement('form').addEvent('submit',this.submit.closureListener(this));
 		this.pane.append(this.form);
 		this.inputs = {};
-		
+
 		for(itm in f) {
 			var field = f[itm];
 			var val = '';
@@ -39,7 +39,7 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 				val = field['value'] || '';
 			}
 			var type = f[itm].type;
-			
+
 			if(type == 'title') {
 					new bkElement('div').setContent(field.txt).setStyle({fontSize : '14px', fontWeight: 'bold', padding : '0px', margin : '2px 0'}).appendTo(this.form);
 			} else {
@@ -47,7 +47,7 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 				if(field.txt) {
 					new bkElement('label').setAttributes({'for' : itm}).setContent(field.txt).setStyle({margin : '2px 4px', fontSize : '13px', width: '50px', lineHeight : '20px', textAlign : 'right', 'float' : 'left'}).appendTo(contain);
 				}
-				
+
 				switch(type) {
 					case 'text':
 						this.inputs[itm] = new bkElement('input').setAttributes({id : itm, 'value' : val, 'type' : 'text'}).setStyle({margin : '2px 0', fontSize : '13px', 'float' : 'left', height : '20px', border : '1px solid #ccc', overflow : 'hidden'}).setStyle(field.style).appendTo(contain);
@@ -61,15 +61,15 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 					case 'content':
 						this.inputs[itm] = new bkElement('textarea').setAttributes({id : itm}).setStyle({border : '1px solid #ccc', 'float' : 'left'}).setStyle(field.style).appendTo(contain);
 						this.inputs[itm].value = val;
-				}	
+				}
 			}
 		}
 		new bkElement('input').setAttributes({'type' : 'submit'}).setStyle({backgroundColor : '#efefef',border : '1px solid #ccc', margin : '3px 0', 'float' : 'left', 'clear' : 'both'}).appendTo(this.form);
-		this.form.onsubmit = bkLib.cancelEvent;	
+		this.form.onsubmit = bkLib.cancelEvent;
 	},
-	
+
 	submit : function() { },
-	
+
 	findElm : function(tag,attr,val) {
 		var list = this.ne.selectedInstance.getElm().getElementsByTagName(tag);
 		for(var i=0;i<list.length;i++) {
@@ -78,12 +78,12 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 			}
 		}
 	},
-	
+
 	removePane : function() {
 		if(this.pane) {
 			this.pane.remove();
 			this.pane = null;
 			this.ne.selectedInstance.restoreRng();
-		}	
-	}	
+		}
+	}
 });

@@ -1,6 +1,6 @@
 /**
  * NicEdit Core
- * @description: Core of nicEdit with basic features, required for all plugins 
+ * @description: Core of nicEdit with basic features, required for all plugins
  * @author: Brian Kirchoff
  * @version: 0.9.0
  * @order: bkLib,nicConfig,nicCore,nicInstance,nicIFrameInstance,nicPanel,nicButton,nicPlugin
@@ -10,7 +10,7 @@
 var nicEditors = {
 	nicPlugins : [],
 	editors : [],
-	
+
 	registerPlugin : function(plugin,options) {
 		this.nicPlugins.push({p : plugin, o : options});
 	},
@@ -22,7 +22,7 @@ var nicEditors = {
 		}
 		return nicEditors.editors;
 	},
-	
+
 	findEditor : function(e) {
 		var editors = nicEditors.editors;
 		for(var i=0;i<editors.length;i++) {
@@ -45,7 +45,7 @@ var nicEditor = bkClass.extend({
 		bkExtend(this.options,o);
 		this.nicInstances = new Array();
 		this.loadedPlugins = new Array();
-		
+
 		var plugins = nicEditors.nicPlugins;
 		for(var i=0;i<plugins.length;i++) {
 			this.loadedPlugins.push(new plugins[i].p(this,plugins[i].o));
@@ -53,12 +53,12 @@ var nicEditor = bkClass.extend({
 		nicEditors.editors.push(this);
 		bkLib.addEvent(document.body,'mousedown', this.selectCheck.closureListener(this) );
 	},
-	
+
 	panelInstance : function(e,o) {
 		e = this.checkReplace($BK(e));
 		var panelElm = new bkElement('DIV').setStyle({width : (parseInt(e.getStyle('width')) || e.clientWidth)+'px'}).appendBefore(e);
 		this.setPanel(panelElm);
-		return this.addInstance(e,o);	
+		return this.addInstance(e,o);
 	},
 
 	checkReplace : function(e) {
@@ -82,11 +82,11 @@ var nicEditor = bkClass.extend({
 		this.nicInstances.push(newInstance);
 		return this;
 	},
-	
+
 	removeInstance : function(e) {
 		e = $BK(e);
 		var instances = this.nicInstances;
-		for(var i=0;i<instances.length;i++) {	
+		for(var i=0;i<instances.length;i++) {
 			if(instances[i].e == e) {
 				instances[i].remove();
 				this.nicInstances.splice(i,1);
@@ -98,7 +98,7 @@ var nicEditor = bkClass.extend({
 		if(this.nicPanel) {
 			this.nicPanel.remove();
 			this.nicPanel = null;
-		}	
+		}
 	},
 
 	instanceById : function(e) {
@@ -108,7 +108,7 @@ var nicEditor = bkClass.extend({
 			if(instances[i].e == e) {
 				return instances[i];
 			}
-		}	
+		}
 	},
 
 	setPanel : function(e) {
@@ -116,19 +116,19 @@ var nicEditor = bkClass.extend({
 		this.fireEvent('panel',this.nicPanel);
 		return this;
 	},
-	
-	nicCommand : function(cmd,args) {	
+
+	nicCommand : function(cmd,args) {
 		if(this.selectedInstance) {
 			this.selectedInstance.nicCommand(cmd,args);
 		}
 	},
-	
+
 	getIcon : function(iconName,options) {
 		var icon = this.options.iconList[iconName];
 		var file = (options.iconFiles) ? options.iconFiles[iconName] : '';
-		return {backgroundImage : "url('"+((icon) ? this.options.iconsPath : file)+"')", backgroundPosition : ((icon) ? ((icon-1)*-18) : 0)+'px 0px'};	
+		return {backgroundImage : "url('"+((icon) ? this.options.iconsPath : file)+"')", backgroundPosition : ((icon) ? ((icon-1)*-18) : 0)+'px 0px'};
 	},
-		
+
 	selectCheck : function(e,t) {
 		var found = false;
 		do{
@@ -141,6 +141,6 @@ var nicEditor = bkClass.extend({
 		this.selectedInstance = null;
 		return false;
 	}
-	
+
 });
 nicEditor = nicEditor.extend(bkEvent);
