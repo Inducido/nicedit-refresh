@@ -56,7 +56,8 @@ var nicEditor = bkClass.extend({
 
 	panelInstance : function(e,o) {
 		e = this.checkReplace($BK(e));
-		var panelElm = new bkElement('DIV').setStyle({width : (parseInt(e.getStyle('width')) || e.clientWidth)+'px'}).appendBefore(e);
+		//this is the buttons toolbar
+		var panelElm = new bkElement('DIV').setStyle({width : this.options.getEditorWidth(e) }).appendBefore(e);
 		this.setPanel(panelElm);
 		return this.addInstance(e,o);
 	},

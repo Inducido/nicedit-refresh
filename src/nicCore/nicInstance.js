@@ -21,10 +21,15 @@ var nicEditorInstance = bkClass.extend({
 		var isTextarea = (e.nodeName.toLowerCase() == "textarea");
 		if(isTextarea || this.options.hasPanel) {
 			var ie7s = (bkLib.isMSIE && !((typeof document.body.style.maxHeight != "undefined") && document.compatMode == "CSS1Compat"))
-			var s = {width: newX+'px', border : '1px solid #ccc', borderTop : 0, overflowY : 'auto', overflowX: 'hidden' };
+			var s = {width: this.ne.options.getEditorWidth(e), border : '1px solid #ccc', borderTop : 0, overflowY : 'auto', overflowX: 'hidden' };
 			s[(ie7s) ? 'height' : 'maxHeight'] = (this.ne.options.maxHeight) ? this.ne.options.maxHeight+'px' : null;
 			this.editorContain = new bkElement('DIV').setStyle(s).appendBefore(e);
-			var editorElm = new bkElement('DIV').setStyle({width : (newX-8)+'px', margin: '4px', minHeight : newY+'px'}).addClass('main').appendTo(this.editorContain);
+
+    	var ElmExtraoptions = {};
+		if(typeof this.ne.options.editor_outlineColor != "undefined")
+			ElmExtraoptions['outlineColor']=this.ne.options.editor_outlineColor;
+
+			var editorElm = new bkElement('DIV').setStyle(bkExtend({ margin: '4px', minHeight : newY+'px'},ElmExtraoptions)).addClass('main').appendTo(this.editorContain);
 
 			e.setStyle({display : 'none'});
 
