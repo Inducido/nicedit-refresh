@@ -126,9 +126,11 @@ var nicEditor = bkClass.extend({
 	},
 
 	getIcon : function(iconName,options) {
+		// icon form sprite : it returns a number (position in sprite)
 		var icon = this.options.iconList[iconName];
+		// icon from individual image file
 		var file = (options.iconFiles) ? options.iconFiles[iconName] : '';
-		return {backgroundImage : "url('"+((icon) ? this.options.iconsPath : file)+"')", backgroundPosition : ((icon) ? ((icon-1)*-18) : 0)+'px 0px'};
+		return {backgroundImage : "url('"+((icon) ? this.options.iconsPath : this.options.iconsPath+'/'+file)+"')", backgroundPosition : ((icon) ? ((icon-1)*-18) : 0)+'px 0px'};
 	},
 
 	selectCheck : function(e,t) {

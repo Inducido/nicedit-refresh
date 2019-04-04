@@ -273,10 +273,15 @@ var nicEditorConfig = bkClass.extend({
 		'outdent' : {name : __t('Remove Indent'), command : 'outdent', noActive : true},
 		'hr' : {name : __t('Horizontal Rule'), command : 'insertHorizontalRule', noActive : true}
 	},
-	iconsPath : /* NICEDIT_ICONSPATH_START */'nicEditorIcons.gif'/* NICEDIT_ICONSPATH_END */,
+	//sprites single image path: used in combination with iconList
+	//iconsPath : /* NICEDIT_ICONSPATH_START */'nicEditorIcons.gif'/* NICEDIT_ICONSPATH_END */,
+	iconsPath : "../icons",
+
 	buttonList : ['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink','forecolor','bgcolor'],
+	//to use sprites in a single image, this must contain data, else iconFiles are used
 	iconList : /* NICEDIT_ICONLIST_START */{}/* NICEDIT_ICONLIST_END */
-	/* NICEDIT_REMOVE_START */,iconFiles : {'bold' : 'src/nicCore/icons/bold.gif', 'italic' : 'src/nicCore/icons/italic.gif', 'underline' : 'src/nicCore/icons/underline.gif', 'outdent' : 'src/nicCore/icons/outdent.gif', 'indent' : 'src/nicCore/icons/indent.gif', 'hr' : 'src/nicCore/icons/hr.gif', 'superscript' : 'src/nicCore/icons/superscript.gif', 'subscript' : 'src/nicCore/icons/subscript.gif', 'strikethrough' : 'src/nicCore/icons/strikethrough.gif', 'ul' : 'src/nicCore/icons/ul.gif', 'ol' : 'src/nicCore/icons/ol.gif', 'left' : 'src/nicCore/icons/left.gif', 'right' : 'src/nicCore/icons/right.gif', 'center' : 'src/nicCore/icons/center.gif', 'justify' : 'src/nicCore/icons/justify.gif', 'save' : 'src/nicCore/icons/save.gif', 'removeformat' : 'src/nicCore/icons/removeformat.gif'},/* NICEDIT_REMOVE_END */
+
+	/* NICEDIT_REMOVE_START */,iconFiles : {'bold' : 'bold.gif', 'italic' : 'italic.gif', 'underline' : 'underline.gif', 'outdent' : 'outdent.gif', 'indent' : 'indent.gif', 'hr' : 'hr.gif', 'superscript' : 'superscript.gif', 'subscript' : 'subscript.gif', 'strikethrough' : 'strikethrough.gif', 'ul' : 'ul.gif', 'ol' : 'ol.gif', 'left' : 'left.gif', 'right' : 'right.gif', 'center' : 'center.gif', 'justify' : 'justify.gif', 'save' : 'save.gif', 'removeformat' : 'removeformat.gif'},/* NICEDIT_REMOVE_END */
 
 	// this sets the default width of the editor (put into css style)
 	getEditorWidth: function(e)
@@ -426,9 +431,11 @@ var nicEditor = bkClass.extend({
 	},
 
 	getIcon : function(iconName,options) {
+		// icon form sprite : it returns a number (position in sprite)
 		var icon = this.options.iconList[iconName];
+		// icon from individual image file
 		var file = (options.iconFiles) ? options.iconFiles[iconName] : '';
-		return {backgroundImage : "url('"+((icon) ? this.options.iconsPath : file)+"')", backgroundPosition : ((icon) ? ((icon-1)*-18) : 0)+'px 0px'};
+		return {backgroundImage : "url('"+((icon) ? this.options.iconsPath : this.options.iconsPath+'/'+file)+"')", backgroundPosition : ((icon) ? ((icon-1)*-18) : 0)+'px 0px'};
 	},
 
 	selectCheck : function(e,t) {
@@ -941,7 +948,7 @@ var nicPlugin = bkClass.extend({
 
  /* START CONFIG */
 var nicPaneOptions = {/* NICEDIT_REMOVE_START */
-	iconFiles : {'close' : 'src/nicPane/icons/close.gif'}
+	iconFiles : {'close' : 'close.gif'}
 /* NICEDIT_REMOVE_END */ };
 /* END CONFIG */
 
@@ -1148,7 +1155,7 @@ var nicSelectOptions = {
 		'fontFamily' : {name : __t('Select Font Family'), type : 'nicEditorFontFamilySelect', command : 'fontname'},
 		'fontFormat' : {name : __t('Select Font Format'), type : 'nicEditorFontFormatSelect', command : 'formatBlock'}
 	}/* NICEDIT_REMOVE_START */
-	,iconFiles : {'arrow' : 'src/nicSelect/icons/arrow.gif'}/* NICEDIT_REMOVE_END */
+	,iconFiles : {'arrow' : 'arrow.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
 var nicEditorSelect = bkClass.extend({
@@ -1288,7 +1295,7 @@ var nicLinkOptions = {
 	buttons : {
 		'link' : {name : 'Add Link', type : 'nicLinkButton', tags : ['A']},
 		'unlink' : {name : 'Remove Link',  command : 'unlink', noActive : true}
-	}/* NICEDIT_REMOVE_START */,iconFiles : {'link' : 'src/nicLink/icons/link.gif', 'unlink' : 'src/nicLink/icons/unlink.gif'}/* NICEDIT_REMOVE_END */
+	}/* NICEDIT_REMOVE_START */,iconFiles : {'link' : 'link.gif', 'unlink' : 'unlink.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
 
@@ -1327,6 +1334,7 @@ var nicLinkButton = nicEditorAdvancedButton.extend({
 });
 
 nicEditors.registerPlugin(nicPlugin,nicLinkOptions);
+
 /**
  * nicColors
  * @description: Provides buttons to control the foreground and background color of text
@@ -1340,7 +1348,7 @@ var nicColorOptions = {
 	buttons : {
 		'forecolor' : {name : __t('Change Text Color'), type : 'nicEditorColorButton', noClose : true},
 		'bgcolor' : {name : __t('Change Background Color'), type : 'nicEditorBgColorButton', noClose : true}
-	}/* NICEDIT_REMOVE_START */,iconFiles : {'forecolor' : 'src/nicColors/icons/forecolor.gif', 'bgcolor' : 'src/nicColors/icons/bgcolor.gif'}/* NICEDIT_REMOVE_END */
+	}/* NICEDIT_REMOVE_START */,iconFiles : {'forecolor' : 'forecolor.gif', 'bgcolor' : 'bgcolor.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
 
@@ -1414,7 +1422,7 @@ var nicImageOptions = {
 	buttons : {
 		'image' : {name : 'Add Image', type : 'nicImageButton', tags : ['IMG']}
 	}
-	/* NICEDIT_REMOVE_START */,iconFiles : {'image' : 'src/nicImage/icons/image.gif'}/* NICEDIT_REMOVE_END */
+	/* NICEDIT_REMOVE_START */,iconFiles : {'image' : 'image.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
 
@@ -1466,7 +1474,7 @@ nicEditors.registerPlugin(nicPlugin,nicImageOptions);
 var nicSaveOptions = {
 	buttons : {
 		'save' : {name : __t('Save this content'), type : 'nicEditorSaveButton'}
-	}/* NICEDIT_REMOVE_START */,iconFiles : {'save' : 'src/nicSave/icons/save.gif'}/* NICEDIT_REMOVE_END */
+	}/* NICEDIT_REMOVE_START */,iconFiles : {'save' : 'save.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
 
@@ -1498,7 +1506,7 @@ var nicCodeOptions = {
 	buttons : {
 		'xhtml' : {name : 'Edit HTML', type : 'nicCodeButton'}
 	}
-	/* NICEDIT_REMOVE_START */,iconFiles : {'xhtml' : 'src/nicCode/icons/xhtml.gif'}/* NICEDIT_REMOVE_END */
+	/* NICEDIT_REMOVE_START */,iconFiles : {'xhtml' : 'xhtml.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
 

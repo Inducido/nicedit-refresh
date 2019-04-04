@@ -18,16 +18,23 @@ var nicEditorConfig = bkClass.extend({
 		'outdent' : {name : __t('Remove Indent'), command : 'outdent', noActive : true},
 		'hr' : {name : __t('Horizontal Rule'), command : 'insertHorizontalRule', noActive : true}
 	},
-	iconsPath : /* NICEDIT_ICONSPATH_START */'nicEditorIcons.gif'/* NICEDIT_ICONSPATH_END */,
+	//sprites single image path: used in combination with iconList
+	//iconsPath : /* NICEDIT_ICONSPATH_START */'nicEditorIcons.gif'/* NICEDIT_ICONSPATH_END */,
+
+	//when no sprites are defined (in iconList), iconsPath is used to get root path to the icons
+	iconsPath : "../icons",
+
 	buttonList : ['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink','forecolor','bgcolor'],
+	//to use sprites in a single image, this must contain data, else iconFiles are used
 	iconList : /* NICEDIT_ICONLIST_START */{}/* NICEDIT_ICONLIST_END */
-	/* NICEDIT_REMOVE_START */,iconFiles : {'bold' : 'src/nicCore/icons/bold.gif', 'italic' : 'src/nicCore/icons/italic.gif', 'underline' : 'src/nicCore/icons/underline.gif', 'outdent' : 'src/nicCore/icons/outdent.gif', 'indent' : 'src/nicCore/icons/indent.gif', 'hr' : 'src/nicCore/icons/hr.gif', 'superscript' : 'src/nicCore/icons/superscript.gif', 'subscript' : 'src/nicCore/icons/subscript.gif', 'strikethrough' : 'src/nicCore/icons/strikethrough.gif', 'ul' : 'src/nicCore/icons/ul.gif', 'ol' : 'src/nicCore/icons/ol.gif', 'left' : 'src/nicCore/icons/left.gif', 'right' : 'src/nicCore/icons/right.gif', 'center' : 'src/nicCore/icons/center.gif', 'justify' : 'src/nicCore/icons/justify.gif', 'save' : 'src/nicCore/icons/save.gif', 'removeformat' : 'src/nicCore/icons/removeformat.gif'},/* NICEDIT_REMOVE_END */
+
+	/* NICEDIT_REMOVE_START */,iconFiles : {'bold' : 'bold.gif', 'italic' : 'italic.gif', 'underline' : 'underline.gif', 'outdent' : 'outdent.gif', 'indent' : 'indent.gif', 'hr' : 'hr.gif', 'superscript' : 'superscript.gif', 'subscript' : 'subscript.gif', 'strikethrough' : 'strikethrough.gif', 'ul' : 'ul.gif', 'ol' : 'ol.gif', 'left' : 'left.gif', 'right' : 'right.gif', 'center' : 'center.gif', 'justify' : 'justify.gif', 'save' : 'save.gif', 'removeformat' : 'removeformat.gif'},/* NICEDIT_REMOVE_END */
 
 	// this sets the default width of the editor (put into css style)
 	getEditorWidth: function(e)
 	{
 		return '100%';
-		// old calculation (take width at creation
+		// old calculation (take width at creation)
 		//return (parseInt(e.getStyle('width')) || e.clientWidth)+'px';
 	},
 

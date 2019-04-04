@@ -13,7 +13,7 @@ var nicSelectOptions = {
 		'fontFamily' : {name : __t('Select Font Family'), type : 'nicEditorFontFamilySelect', command : 'fontname'},
 		'fontFormat' : {name : __t('Select Font Format'), type : 'nicEditorFontFormatSelect', command : 'formatBlock'}
 	}/* NICEDIT_REMOVE_START */
-	,iconFiles : {'arrow' : 'src/nicSelect/icons/arrow.gif'}/* NICEDIT_REMOVE_END */
+	,iconFiles : {'arrow' : 'arrow.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
 var nicEditorSelect = bkClass.extend({

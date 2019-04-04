@@ -12,7 +12,7 @@ var nicUploadOptions = {
 	buttons : {
 		'upload' : {name : 'Upload Image', type : 'nicUploadButton'}
 	}
-	/* NICEDIT_REMOVE_START */,iconFiles : {'upload' : 'src/nicUpload/icons/upload.gif'}/* NICEDIT_REMOVE_END */
+	/* NICEDIT_REMOVE_START */,iconFiles : {'upload' : 'upload.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
 

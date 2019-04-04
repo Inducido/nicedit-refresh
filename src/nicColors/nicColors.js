@@ -11,7 +11,7 @@ var nicColorOptions = {
 	buttons : {
 		'forecolor' : {name : __t('Change Text Color'), type : 'nicEditorColorButton', noClose : true},
 		'bgcolor' : {name : __t('Change Background Color'), type : 'nicEditorBgColorButton', noClose : true}
-	}/* NICEDIT_REMOVE_START */,iconFiles : {'forecolor' : 'src/nicColors/icons/forecolor.gif', 'bgcolor' : 'src/nicColors/icons/bgcolor.gif'}/* NICEDIT_REMOVE_END */
+	}/* NICEDIT_REMOVE_START */,iconFiles : {'forecolor' : 'forecolor.gif', 'bgcolor' : 'bgcolor.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
 

@@ -8,7 +8,7 @@
 
  /* START CONFIG */
 var nicPaneOptions = {/* NICEDIT_REMOVE_START */
-	iconFiles : {'close' : 'src/nicPane/icons/close.gif'}
+	iconFiles : {'close' : 'close.gif'}
 /* NICEDIT_REMOVE_END */ };
 /* END CONFIG */
 

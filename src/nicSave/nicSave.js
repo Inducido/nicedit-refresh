@@ -10,7 +10,7 @@
 var nicSaveOptions = {
 	buttons : {
 		'save' : {name : __t('Save this content'), type : 'nicEditorSaveButton'}
-	}/* NICEDIT_REMOVE_START */,iconFiles : {'save' : 'src/nicSave/icons/save.gif'}/* NICEDIT_REMOVE_END */
+	}/* NICEDIT_REMOVE_START */,iconFiles : {'save' : 'save.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
 

@@ -61,9 +61,9 @@ gulp.task('scripts', function() {
 
 // copy icon images from the src folder to the demo folder
 gulp.task('copy', function() {
-    gulp.src(["src/**/*.gif","src/**/*.png"])
-        .pipe(gulp.dest('demos/src'));
+    gulp.src(["icons/**/*.gif","icons/**/*.png"])
+        .pipe(gulp.dest('demos/icons'));
 });
 
-gulp.task('default', ['scripts','copy']);
+gulp.task('default', ['scripts']);
 

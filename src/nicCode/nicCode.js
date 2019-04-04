@@ -11,7 +11,7 @@ var nicCodeOptions = {
 	buttons : {
 		'xhtml' : {name : 'Edit HTML', type : 'nicCodeButton'}
 	}
-	/* NICEDIT_REMOVE_START */,iconFiles : {'xhtml' : 'src/nicCode/icons/xhtml.gif'}/* NICEDIT_REMOVE_END */
+	/* NICEDIT_REMOVE_START */,iconFiles : {'xhtml' : 'xhtml.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
 

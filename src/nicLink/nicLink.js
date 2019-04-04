@@ -11,7 +11,7 @@ var nicLinkOptions = {
 	buttons : {
 		'link' : {name : 'Add Link', type : 'nicLinkButton', tags : ['A']},
 		'unlink' : {name : 'Remove Link',  command : 'unlink', noActive : true}
-	}/* NICEDIT_REMOVE_START */,iconFiles : {'link' : 'src/nicLink/icons/link.gif', 'unlink' : 'src/nicLink/icons/unlink.gif'}/* NICEDIT_REMOVE_END */
+	}/* NICEDIT_REMOVE_START */,iconFiles : {'link' : 'link.gif', 'unlink' : 'unlink.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
 

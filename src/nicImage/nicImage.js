@@ -11,7 +11,7 @@ var nicImageOptions = {
 	buttons : {
 		'image' : {name : 'Add Image', type : 'nicImageButton', tags : ['IMG']}
 	}
-	/* NICEDIT_REMOVE_START */,iconFiles : {'image' : 'src/nicImage/icons/image.gif'}/* NICEDIT_REMOVE_END */
+	/* NICEDIT_REMOVE_START */,iconFiles : {'image' : 'image.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
 

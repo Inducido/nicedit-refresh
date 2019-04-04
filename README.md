@@ -76,7 +76,7 @@ src/nicUndo/nicUndo.js,
 ## Original project
 The original nicEdit project can be found here: http://nicedit.com
 
-From that website:
+From the website:
 > NicEdit was developed by [Brian Kirchoff](http://bkirchoff.com/) and is free to use for any purpose under the MIT license.  
 > NicEdit comes with the MIT license information (see src/nicLicense.js) and LICENCE file  
 > See also [website license](http://nicedit.com/license.php).
