@@ -1,3 +1,5 @@
+
+//bkExtend(a,b) extends 1rst object "a" with second object "b"
 var bkExtend = function(){
 	var args = arguments;
 	if (args.length == 1) args = [this, args[0]];

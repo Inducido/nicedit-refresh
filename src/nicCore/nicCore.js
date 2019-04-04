@@ -73,14 +73,14 @@ var nicEditor = bkClass.extend({
 
 	addInstance : function(e,o) {
 		e = this.checkReplace($BK(e));
-    if(e){
-            if( e.contentEditable || !!window.opera ) {
-                var newInstance = new nicEditorInstance(e,o,this);
-            } else {
-                var newInstance = new nicEditorIFrameInstance(e,o,this);
-        }
+    	if(e){
+				if( e.contentEditable || !!window.opera ) {
+					var newInstance = new nicEditorInstance(e,o,this);
+				} else {
+					var newInstance = new nicEditorIFrameInstance(e,o,this);
+			}
+			this.nicInstances.push(newInstance);
 		}
-		this.nicInstances.push(newInstance);
 		return this;
 	},
 
@@ -104,6 +104,7 @@ var nicEditor = bkClass.extend({
 
 	instanceById : function(e) {
 		e = $BK(e);
+		if(!e) { return null;}
 		var instances = this.nicInstances;
 		for(var i=0;i<instances.length;i++) {
 			if(instances[i].e == e) {
