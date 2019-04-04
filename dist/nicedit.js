@@ -5,12 +5,17 @@
  * For more information visit http://nicedit.com/
  * Do not remove this copyright message
  */
+// Version 0.91 released April 4th, 2019
+
+
+//bkExtend(a,b) extends 1rst object "a" with second object "b"
 var bkExtend = function(){
 	var args = arguments;
 	if (args.length == 1) args = [this, args[0]];
 	for (var prop in args[1]) args[0][prop] = args[1][prop];
 	return args[0];
 };
+
 function bkClass() { }
 bkClass.prototype.construct = function() {};
 bkClass.extend = function(def) {
@@ -229,7 +234,7 @@ var bkEvent = {
 	}
 };
 
-function __(s) {
+function __t(s) {
 	return (typeof l10n === 'undefined' || l10n[s] === undefined) ? s : l10n[s];
 }
 
@@ -251,29 +256,48 @@ Function.prototype.closureListener = function() {
 /* START CONFIG */
 var nicEditorConfig = bkClass.extend({
 	buttons : {
-		'bold' : {name : __('Click to Bold'), command : 'Bold', tags : ['B','STRONG'], css : {'font-weight' : 'bold'}, key : 'b'},
-		'italic' : {name : __('Click to Italic'), command : 'Italic', tags : ['EM','I'], css : {'font-style' : 'italic'}, key : 'i'},
-		'underline' : {name : __('Click to Underline'), command : 'Underline', tags : ['U'], css : {'text-decoration' : 'underline'}, key : 'u'},
-		'left' : {name : __('Left Align'), command : 'justifyleft', noActive : true},
-		'center' : {name : __('Center Align'), command : 'justifycenter', noActive : true},
-		'right' : {name : __('Right Align'), command : 'justifyright', noActive : true},
-		'justify' : {name : __('Justify Align'), command : 'justifyfull', noActive : true},
-		'ol' : {name : __('Insert Ordered List'), command : 'insertorderedlist', tags : ['OL']},
-		'ul' : 	{name : __('Insert Unordered List'), command : 'insertunorderedlist', tags : ['UL']},
-		'subscript' : {name : __('Click to Subscript'), command : 'subscript', tags : ['SUB']},
-		'superscript' : {name : __('Click to Superscript'), command : 'superscript', tags : ['SUP']},
-		'strikethrough' : {name : __('Click to Strike Through'), command : 'strikeThrough', css : {'text-decoration' : 'line-through'}},
-		'removeformat' : {name : __('Remove Formatting'), command : 'removeformat', noActive : true},
-		'indent' : {name : __('Indent Text'), command : 'indent', noActive : true},
-		'outdent' : {name : __('Remove Indent'), command : 'outdent', noActive : true},
-		'hr' : {name : __('Horizontal Rule'), command : 'insertHorizontalRule', noActive : true}
+		'bold' : {name : __t('Click to Bold'), command : 'Bold', tags : ['B','STRONG'], css : {'font-weight' : 'bold'}, key : 'b'},
+		'italic' : {name : __t('Click to Italic'), command : 'Italic', tags : ['EM','I'], css : {'font-style' : 'italic'}, key : 'i'},
+		'underline' : {name : __t('Click to Underline'), command : 'Underline', tags : ['U'], css : {'text-decoration' : 'underline'}, key : 'u'},
+		'left' : {name : __t('Left Align'), command : 'justifyleft', noActive : true},
+		'center' : {name : __t('Center Align'), command : 'justifycenter', noActive : true},
+		'right' : {name : __t('Right Align'), command : 'justifyright', noActive : true},
+		'justify' : {name : __t('Justify Align'), command : 'justifyfull', noActive : true},
+		'ol' : {name : __t('Insert Ordered List'), command : 'insertorderedlist', tags : ['OL']},
+		'ul' : 	{name : __t('Insert Unordered List'), command : 'insertunorderedlist', tags : ['UL']},
+		'subscript' : {name : __t('Click to Subscript'), command : 'subscript', tags : ['SUB']},
+		'superscript' : {name : __t('Click to Superscript'), command : 'superscript', tags : ['SUP']},
+		'strikethrough' : {name : __t('Click to Strike Through'), command : 'strikeThrough', css : {'text-decoration' : 'line-through'}},
+		'removeformat' : {name : __t('Remove Formatting'), command : 'removeformat', noActive : true},
+		'indent' : {name : __t('Indent Text'), command : 'indent', noActive : true},
+		'outdent' : {name : __t('Remove Indent'), command : 'outdent', noActive : true},
+		'hr' : {name : __t('Horizontal Rule'), command : 'insertHorizontalRule', noActive : true}
 	},
 	iconsPath : /* NICEDIT_ICONSPATH_START */'nicEditorIcons.gif'/* NICEDIT_ICONSPATH_END */,
 	buttonList : ['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink','forecolor','bgcolor'],
 	iconList : /* NICEDIT_ICONLIST_START */{}/* NICEDIT_ICONLIST_END */
-	/* NICEDIT_REMOVE_START */,iconFiles : {'bold' : 'src/nicCore/icons/bold.gif', 'italic' : 'src/nicCore/icons/italic.gif', 'underline' : 'src/nicCore/icons/underline.gif', 'outdent' : 'src/nicCore/icons/outdent.gif', 'indent' : 'src/nicCore/icons/indent.gif', 'hr' : 'src/nicCore/icons/hr.gif', 'superscript' : 'src/nicCore/icons/superscript.gif', 'subscript' : 'src/nicCore/icons/subscript.gif', 'strikethrough' : 'src/nicCore/icons/strikethrough.gif', 'ul' : 'src/nicCore/icons/ul.gif', 'ol' : 'src/nicCore/icons/ol.gif', 'left' : 'src/nicCore/icons/left.gif', 'right' : 'src/nicCore/icons/right.gif', 'center' : 'src/nicCore/icons/center.gif', 'justify' : 'src/nicCore/icons/justify.gif', 'save' : 'src/nicCore/icons/save.gif', 'removeformat' : 'src/nicCore/icons/removeformat.gif'}/* NICEDIT_REMOVE_END */
+	/* NICEDIT_REMOVE_START */,iconFiles : {'bold' : 'src/nicCore/icons/bold.gif', 'italic' : 'src/nicCore/icons/italic.gif', 'underline' : 'src/nicCore/icons/underline.gif', 'outdent' : 'src/nicCore/icons/outdent.gif', 'indent' : 'src/nicCore/icons/indent.gif', 'hr' : 'src/nicCore/icons/hr.gif', 'superscript' : 'src/nicCore/icons/superscript.gif', 'subscript' : 'src/nicCore/icons/subscript.gif', 'strikethrough' : 'src/nicCore/icons/strikethrough.gif', 'ul' : 'src/nicCore/icons/ul.gif', 'ol' : 'src/nicCore/icons/ol.gif', 'left' : 'src/nicCore/icons/left.gif', 'right' : 'src/nicCore/icons/right.gif', 'center' : 'src/nicCore/icons/center.gif', 'justify' : 'src/nicCore/icons/justify.gif', 'save' : 'src/nicCore/icons/save.gif', 'removeformat' : 'src/nicCore/icons/removeformat.gif'},/* NICEDIT_REMOVE_END */
+
+	// this sets the default width of the editor (put into css style)
+	getEditorWidth: function(e)
+	{
+		return '100%';
+		// old calculation (take width at creation
+		//return (parseInt(e.getStyle('width')) || e.clientWidth)+'px';
+	},
+
+	//outline of the editor when it gets focus (blue by default) - comment to keep default bahavior
+	editor_outlineColor:'white',         //not visible
+	// editor_outlineColor:'initial',   //black
+
+
+	//toolTip_BoxClass:"ui-tooltip-rounded ui-tooltip-shadow",
+	//toolTip_Class:"ui-tooltip-rounded",
+
+
 });
 /* END CONFIG */
+
 /**
  * NicEdit Core
  * @description: Core of nicEdit with basic features, required for all plugins
@@ -332,7 +356,8 @@ var nicEditor = bkClass.extend({
 
 	panelInstance : function(e,o) {
 		e = this.checkReplace($BK(e));
-		var panelElm = new bkElement('DIV').setStyle({width : (parseInt(e.getStyle('width')) || e.clientWidth)+'px'}).appendBefore(e);
+		//this is the buttons toolbar
+		var panelElm = new bkElement('DIV').setStyle({width : this.options.getEditorWidth(e) }).appendBefore(e);
 		this.setPanel(panelElm);
 		return this.addInstance(e,o);
 	},
@@ -348,14 +373,14 @@ var nicEditor = bkClass.extend({
 
 	addInstance : function(e,o) {
 		e = this.checkReplace($BK(e));
-    if(e){
-            if( e.contentEditable || !!window.opera ) {
-                var newInstance = new nicEditorInstance(e,o,this);
-            } else {
-                var newInstance = new nicEditorIFrameInstance(e,o,this);
-        }
+    	if(e){
+				if( e.contentEditable || !!window.opera ) {
+					var newInstance = new nicEditorInstance(e,o,this);
+				} else {
+					var newInstance = new nicEditorIFrameInstance(e,o,this);
+			}
+			this.nicInstances.push(newInstance);
 		}
-		this.nicInstances.push(newInstance);
 		return this;
 	},
 
@@ -379,6 +404,7 @@ var nicEditor = bkClass.extend({
 
 	instanceById : function(e) {
 		e = $BK(e);
+		if(!e) { return null;}
 		var instances = this.nicInstances;
 		for(var i=0;i<instances.length;i++) {
 			if(instances[i].e == e) {
@@ -444,10 +470,15 @@ var nicEditorInstance = bkClass.extend({
 		var isTextarea = (e.nodeName.toLowerCase() == "textarea");
 		if(isTextarea || this.options.hasPanel) {
 			var ie7s = (bkLib.isMSIE && !((typeof document.body.style.maxHeight != "undefined") && document.compatMode == "CSS1Compat"))
-			var s = {width: newX+'px', border : '1px solid #ccc', borderTop : 0, overflowY : 'auto', overflowX: 'hidden' };
+			var s = {width: this.ne.options.getEditorWidth(e), border : '1px solid #ccc', borderTop : 0, overflowY : 'auto', overflowX: 'hidden' };
 			s[(ie7s) ? 'height' : 'maxHeight'] = (this.ne.options.maxHeight) ? this.ne.options.maxHeight+'px' : null;
 			this.editorContain = new bkElement('DIV').setStyle(s).appendBefore(e);
-			var editorElm = new bkElement('DIV').setStyle({width : (newX-8)+'px', margin: '4px', minHeight : newY+'px'}).addClass('main').appendTo(this.editorContain);
+
+    	var ElmExtraoptions = {};
+		if(typeof this.ne.options.editor_outlineColor != "undefined")
+			ElmExtraoptions['outlineColor']=this.ne.options.editor_outlineColor;
+
+			var editorElm = new bkElement('DIV').setStyle(bkExtend({ margin: '4px', minHeight : newY+'px'},ElmExtraoptions)).addClass('main').appendTo(this.editorContain);
 
 			e.setStyle({display : 'none'});
 
@@ -907,7 +938,7 @@ var nicPlugin = bkClass.extend({
  * @author: Brian Kirchoff
  * @version: 0.9.0
  */
- 
+
  /* START CONFIG */
 var nicPaneOptions = {/* NICEDIT_REMOVE_START */
 	iconFiles : {'close' : 'src/nicPane/icons/close.gif'}
@@ -919,25 +950,34 @@ var nicEditorPane = bkClass.extend({
 		this.ne = nicEditor;
 		this.elm = elm;
 		this.pos = elm.pos();
-		
+
 		this.contain = new bkElement('div').setStyle({zIndex : '99999', overflow : 'hidden', position : 'absolute', left : this.pos[0]+'px', top : this.pos[1]+'px'})
-		this.pane = new bkElement('div').setStyle({fontSize : '12px', border : '1px solid #ccc', 'overflow': 'hidden', padding : '4px', textAlign: 'left', backgroundColor : '#ffffc9'}).addClass('pane').setStyle(options).appendTo(this.contain);
-		
+
+
+		if('toolTip_BoxClass' in this.ne.options)
+			this.contain.addClass('panebox'+' '+this.ne.options.toolTip_BoxClass);
+
+		//this add the option 'toolTip_Class' to add other css class (to avoid setting inline style)
+		if('toolTip_Class' in this.ne.options)
+			this.pane = new bkElement('div').addClass('pane'+' '+this.ne.options.toolTip_Class).appendTo(this.contain);
+		else
+			this.pane = new bkElement('div').setStyle({fontSize : '12px', border : '1px solid #ccc', 'overflow': 'hidden', padding : '4px', textAlign: 'left', backgroundColor : '#ffffc9'}).addClass('pane').setStyle(options).appendTo(this.contain);
+
 		if(openButton && !openButton.options.noClose) {
 			this.close = new bkElement('div').setStyle({'float' : 'right', height: '16px', width : '16px', cursor : 'pointer'}).setStyle(this.ne.getIcon('close',nicPaneOptions)).addEvent('mousedown',openButton.removePane.closure(this)).appendTo(this.pane);
 		}
-		
+
 		this.contain.noSelect().appendTo(document.body);
-		
+
 		this.position();
-		this.init();	
+		this.init();
 	},
-	
+
 	init : function() { },
-	
+
 	position : function() {
 		if(this.ne.nicPanel) {
-			var panelElm = this.ne.nicPanel.elm;	
+			var panelElm = this.ne.nicPanel.elm;
 			var panelPos = panelElm.pos();
 			var newLeft = panelPos[0]+parseInt(panelElm.getStyle('width'))-(parseInt(this.pane.getStyle('width'))+8);
 			if(newLeft < this.pos[0]) {
@@ -945,28 +985,29 @@ var nicEditorPane = bkClass.extend({
 			}
 		}
 	},
-	
+
 	toggle : function() {
 		this.isVisible = !this.isVisible;
 		this.contain.setStyle({display : ((this.isVisible) ? 'block' : 'none')});
 	},
-	
+
 	remove : function() {
 		if(this.contain) {
 			this.contain.remove();
 			this.contain = null;
 		}
 	},
-	
+
 	append : function(c) {
 		c.appendTo(this.pane);
 	},
-	
+
 	setContent : function(c) {
 		this.pane.setContent(c);
 	}
-	
+
 });
+
 /**
  * nicAdvancedButton
  * @description: Panel button with support for opening a nicPane with configuration form
@@ -1099,69 +1140,69 @@ nicEditors.registerPlugin(nicButtonTips);
  * @author: Brian Kirchoff
  * @version: 0.9.0
  */
- 
+
  /* START CONFIG */
 var nicSelectOptions = {
 	buttons : {
-		'fontSize' : {name : __('Select Font Size'), type : 'nicEditorFontSizeSelect', command : 'fontsize'},
-		'fontFamily' : {name : __('Select Font Family'), type : 'nicEditorFontFamilySelect', command : 'fontname'},
-		'fontFormat' : {name : __('Select Font Format'), type : 'nicEditorFontFormatSelect', command : 'formatBlock'}
+		'fontSize' : {name : __t('Select Font Size'), type : 'nicEditorFontSizeSelect', command : 'fontsize'},
+		'fontFamily' : {name : __t('Select Font Family'), type : 'nicEditorFontFamilySelect', command : 'fontname'},
+		'fontFormat' : {name : __t('Select Font Format'), type : 'nicEditorFontFormatSelect', command : 'formatBlock'}
 	}/* NICEDIT_REMOVE_START */
 	,iconFiles : {'arrow' : 'src/nicSelect/icons/arrow.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
 var nicEditorSelect = bkClass.extend({
-	
+
 	construct : function(e,buttonName,options,nicEditor) {
 		this.options = options.buttons[buttonName];
 		this.elm = e;
 		this.ne = nicEditor;
 		this.name = buttonName;
 		this.selOptions = new Array();
-		
+
 		this.margin = new bkElement('div').setStyle({'float' : 'left', margin : '2px 1px 0 1px'}).appendTo(this.elm);
 		this.contain = new bkElement('div').setStyle({width: '90px', height : '20px', cursor : 'pointer', overflow: 'hidden'}).addClass('selectContain').addEvent('click',this.toggle.closure(this)).appendTo(this.margin);
 		this.items = new bkElement('div').setStyle({overflow : 'hidden', zoom : 1, border: '1px solid #ccc', paddingLeft : '3px', backgroundColor : '#fff'}).appendTo(this.contain);
 		this.control = new bkElement('div').setStyle({overflow : 'hidden', 'float' : 'right', height: '18px', width : '16px'}).addClass('selectControl').setStyle(this.ne.getIcon('arrow',options)).appendTo(this.items);
 		this.txt = new bkElement('div').setStyle({overflow : 'hidden', 'float' : 'left', width : '66px', height : '14px', marginTop : '1px', fontFamily : 'sans-serif', textAlign : 'center', fontSize : '12px'}).addClass('selectTxt').appendTo(this.items);
-		
+
 		if(!window.opera) {
 			this.contain.onmousedown = this.control.onmousedown = this.txt.onmousedown = bkLib.cancelEvent;
 		}
-		
+
 		this.margin.noSelect();
-		
+
 		this.ne.addEvent('selected', this.enable.closure(this)).addEvent('blur', this.disable.closure(this));
-		
+
 		this.disable();
 		this.init();
 	},
-	
+
 	disable : function() {
 		this.isDisabled = true;
 		this.close();
 		this.contain.setStyle({opacity : 0.6});
 	},
-	
+
 	enable : function(t) {
 		this.isDisabled = false;
 		this.close();
 		this.contain.setStyle({opacity : 1});
 	},
-	
+
 	setDisplay : function(txt) {
 		this.txt.setContent(txt);
 	},
-	
+
 	toggle : function() {
 		if(!this.isDisabled) {
 			(this.pane) ? this.close() : this.open();
 		}
 	},
-	
+
 	open : function() {
 		this.pane = new nicEditorPane(this.items,this.ne,{width : '88px', padding: '0px', borderTop : 0, borderLeft : '1px solid #ccc', borderRight : '1px solid #ccc', borderBottom : '0px', backgroundColor : '#fff'});
-		
+
 		for(var i=0;i<this.selOptions.length;i++) {
 			var opt = this.selOptions[i];
 			var itmContain = new bkElement('div').setStyle({overflow : 'hidden', borderBottom : '1px solid #ccc', width: '88px', textAlign : 'left', overflow : 'hidden', cursor : 'pointer'});
@@ -1173,29 +1214,29 @@ var nicEditorSelect = bkClass.extend({
 			}
 		}
 	},
-	
+
 	close : function() {
 		if(this.pane) {
 			this.pane = this.pane.remove();
-		}	
+		}
 	},
-	
+
 	over : function(opt) {
-		opt.setStyle({backgroundColor : '#ccc'});			
+		opt.setStyle({backgroundColor : '#ccc'});
 	},
-	
+
 	out : function(opt) {
 		opt.setStyle({backgroundColor : '#fff'});
 	},
-	
-	
+
+
 	add : function(k,v) {
-		this.selOptions.push(new Array(k,v));	
+		this.selOptions.push(new Array(k,v));
 	},
-	
+
 	update : function(elm) {
 		this.ne.nicCommand(this.options.command,elm);
-		this.close();	
+		this.close();
 	}
 });
 
@@ -1205,13 +1246,13 @@ var nicEditorFontSizeSelect = nicEditorSelect.extend({
 		this.setDisplay('Font&nbsp;Size...');
 		for(itm in this.sel) {
 			this.add(itm,'<font size="'+itm+'">'+this.sel[itm]+'</font>');
-		}		
+		}
 	}
 });
 
 var nicEditorFontFamilySelect = nicEditorSelect.extend({
 	sel : {'arial' : 'Arial','comic sans ms' : 'Comic Sans','courier new' : 'Courier New','georgia' : 'Georgia', 'helvetica' : 'Helvetica', 'impact' : 'Impact', 'times new roman' : 'Times', 'trebuchet ms' : 'Trebuchet', 'verdana' : 'Verdana'},
-	
+
 	init : function() {
 		this.setDisplay('Font&nbsp;Family...');
 		for(itm in this.sel) {
@@ -1222,7 +1263,7 @@ var nicEditorFontFamilySelect = nicEditorSelect.extend({
 
 var nicEditorFontFormatSelect = nicEditorSelect.extend({
 		sel : {'p' : 'Paragraph', 'pre' : 'Pre', 'h6' : 'Heading&nbsp;6', 'h5' : 'Heading&nbsp;5', 'h4' : 'Heading&nbsp;4', 'h3' : 'Heading&nbsp;3', 'h2' : 'Heading&nbsp;2', 'h1' : 'Heading&nbsp;1'},
-		
+
 	init : function() {
 		this.setDisplay('Font&nbsp;Format...');
 		for(itm in this.sel) {
@@ -1233,6 +1274,7 @@ var nicEditorFontFormatSelect = nicEditorSelect.extend({
 });
 
 nicEditors.registerPlugin(nicPlugin,nicSelectOptions);
+
 /**
  * nicLink
  * @description: Adds buttons to create page links in nicEdit
@@ -1296,8 +1338,8 @@ nicEditors.registerPlugin(nicPlugin,nicLinkOptions);
 /* START CONFIG */
 var nicColorOptions = {
 	buttons : {
-		'forecolor' : {name : __('Change Text Color'), type : 'nicEditorColorButton', noClose : true},
-		'bgcolor' : {name : __('Change Background Color'), type : 'nicEditorBgColorButton', noClose : true}
+		'forecolor' : {name : __t('Change Text Color'), type : 'nicEditorColorButton', noClose : true},
+		'bgcolor' : {name : __t('Change Background Color'), type : 'nicEditorBgColorButton', noClose : true}
 	}/* NICEDIT_REMOVE_START */,iconFiles : {'forecolor' : 'src/nicColors/icons/forecolor.gif', 'bgcolor' : 'src/nicColors/icons/bgcolor.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
@@ -1321,7 +1363,7 @@ var nicEditorColorButton = nicEditorAdvancedButton.extend({
 			clrs=colorList[row].split(' ');
 			for(var b=0;b<clrs.length;b++) {
 				var colorCode = '#'+clrs[b];
-						
+
 						var colorSquare = new bkElement('DIV').setStyle({'cursor' : 'pointer', 'height' : '15px', 'float' : 'left'}).appendTo(colorItems);
 						var colorBorder = new bkElement('DIV').setStyle({border: '2px solid '+colorCode}).appendTo(colorSquare);
 						var colorInner = new bkElement('DIV').setStyle({backgroundColor : colorCode, overflow : 'hidden', width : '11px', height : '11px'}).addEvent('click',this.colorSelect.closure(this,colorCode)).addEvent('mouseover',this.on.closure(this,colorBorder)).addEvent('mouseout',this.off.closure(this,colorBorder,colorCode)).appendTo(colorBorder);
@@ -1358,6 +1400,7 @@ var nicEditorBgColorButton = nicEditorColorButton.extend({
 });
 
 nicEditors.registerPlugin(nicPlugin,nicColorOptions);
+
 /**
  * nicImage
  * @description: Adds buttons to insert images in the editor area
@@ -1422,7 +1465,7 @@ nicEditors.registerPlugin(nicPlugin,nicImageOptions);
 /* START CONFIG */
 var nicSaveOptions = {
 	buttons : {
-		'save' : {name : __('Save this content'), type : 'nicEditorSaveButton'}
+		'save' : {name : __t('Save this content'), type : 'nicEditorSaveButton'}
 	}/* NICEDIT_REMOVE_START */,iconFiles : {'save' : 'src/nicSave/icons/save.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
@@ -1441,6 +1484,7 @@ var nicEditorSaveButton = nicEditorButton.extend({
 });
 
 nicEditors.registerPlugin(nicPlugin,nicSaveOptions);
+
 /**
  * nicCode
  * @description: Adds button to edit the HTML in a editor

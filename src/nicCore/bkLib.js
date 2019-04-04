@@ -6,6 +6,7 @@ var bkExtend = function(){
 	for (var prop in args[1]) args[0][prop] = args[1][prop];
 	return args[0];
 };
+
 function bkClass() { }
 bkClass.prototype.construct = function() {};
 bkClass.extend = function(def) {
@@ -224,7 +225,7 @@ var bkEvent = {
 	}
 };
 
-function __(s) {
+function __t(s) {
 	return (typeof l10n === 'undefined' || l10n[s] === undefined) ? s : l10n[s];
 }
 

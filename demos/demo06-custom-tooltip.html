@@ -1,0 +1,117 @@
+<html>
+<head>
+	<title>Demo 6 : tooltip</title>
+
+	<style>
+		/* borrowed from qTip styles */
+		.ui-tooltip{
+
+			padding: 5px 9px;
+
+			font-weight: bold;
+
+			border-width: 1px;
+			border-style: solid;
+
+			font-size: 10.5px;
+			line-height: 12px;
+
+			background-color: #E5F6FE;
+			border-color: #ADD9ED;
+			color: #5E99BD;
+
+			margin: -40px;
+		}
+
+		.ui-tooltip-rounded {
+			-moz-border-radius: 4px;
+			-webkit-border-radius: 4px;
+			border-radius: 4px;
+		}
+
+		.ui-tooltip-shadow {
+			-webkit-box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
+			-moz-box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
+			box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
+		}
+
+
+
+	</style>
+
+</head>
+<body>
+
+<div id="menu"></div>
+
+<div id="intro">
+You can style the tooltip by providing css class in options.<br>
+Top editor use style borrowed from qTip styles.
+
+<p>Second editor does not use style.
+</div>
+<br />
+
+<div id="sample">
+
+	<script type="text/javascript" src="../src/nicLicense.js"></script>
+	<script type="text/javascript" src="../src/nicVersion.js"></script>
+	<script type="text/javascript" src="../src/nicCore/bkLib.js"></script>
+	<script type="text/javascript" src="../src/nicCore/nicConfig.js"></script>
+	<script type="text/javascript" src="../src/nicCore/nicCore.js"></script>
+	<script type="text/javascript" src="../src/nicCore/nicInstance.js"></script>
+	<script type="text/javascript" src="../src/nicCore/nicIFrameInstance.js"></script>
+	<script type="text/javascript" src="../src/nicCore/nicPanel.js"></script>
+	<script type="text/javascript" src="../src/nicCore/nicButton.js"></script>
+	<script type="text/javascript" src="../src/nicCore/nicPlugin.js"></script>
+	<script type="text/javascript" src="../src/nicPane/nicPane.js"></script>
+	<script type="text/javascript" src="../src/nicAdvancedButton/nicAdvancedButton.js"></script>
+	<script type="text/javascript" src="../src/nicButtonTips/nicButtonTips.js"></script>
+	<script type="text/javascript" src="../src/nicSelect/nicSelect.js"></script>
+	<script type="text/javascript" src="../src/nicLink/nicLink.js"></script>
+	<script type="text/javascript" src="../src/nicColors/nicColors.js"></script>
+	<script type="text/javascript" src="../src/nicImage/nicImage.js"></script>
+	<script type="text/javascript" src="../src/nicSave/nicSave.js"></script>
+	<script type="text/javascript" src="../src/nicCode/nicCode.js"></script>
+
+
+
+	<script type="text/javascript">
+	bkLib.onDomLoaded(function() {
+
+
+		var options={
+
+			toolTip_BoxClass:"ui-tooltip  ui-tooltip-rounded ui-tooltip-shadow",
+			toolTip_Class:"ui-tooltip-rounded",
+
+
+		};
+
+
+		var   area1 = new nicEditor(options).panelInstance('area1',{hasPanel : true});
+
+		var   area2 = new nicEditor({fullPanel : true}).panelInstance('area2',{hasPanel : true});
+
+
+
+
+
+	});
+</script>
+
+	<h4>1rst Textarea with options</h4>
+	<textarea id="area1" style="width: 100%;">
+		<b><a href=https://www.evalbox.com>Evalbox</a></b> is a free online test maker service, built to create and manage online exams (or paper exams). It is an easy to use online 24/7 testing service, trusted by thousands of worldwide professionals, which embeds advanced automatic grading tools. You just have to simply create quizzes using the random quiz maker (that will randomly pick up questions from your question banks), or manually selecting the ones that fits the most with your needs, and schedule your exams.
+</textarea>
+	<br />
+
+<h4>Second Textarea</h4>
+<textarea id="area2" style="width: 100%;">
+	Some Initial Content was in this textarea
+</textarea>
+<br />
+
+
+</body>
+</html>

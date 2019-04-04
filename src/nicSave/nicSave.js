@@ -9,7 +9,7 @@
 /* START CONFIG */
 var nicSaveOptions = {
 	buttons : {
-		'save' : {name : __('Save this content'), type : 'nicEditorSaveButton'}
+		'save' : {name : __t('Save this content'), type : 'nicEditorSaveButton'}
 	}/* NICEDIT_REMOVE_START */,iconFiles : {'save' : 'src/nicSave/icons/save.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */

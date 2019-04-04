@@ -9,8 +9,8 @@
 /* START CONFIG */
 var nicColorOptions = {
 	buttons : {
-		'forecolor' : {name : __('Change Text Color'), type : 'nicEditorColorButton', noClose : true},
-		'bgcolor' : {name : __('Change Background Color'), type : 'nicEditorBgColorButton', noClose : true}
+		'forecolor' : {name : __t('Change Text Color'), type : 'nicEditorColorButton', noClose : true},
+		'bgcolor' : {name : __t('Change Background Color'), type : 'nicEditorBgColorButton', noClose : true}
 	}/* NICEDIT_REMOVE_START */,iconFiles : {'forecolor' : 'src/nicColors/icons/forecolor.gif', 'bgcolor' : 'src/nicColors/icons/bgcolor.gif'}/* NICEDIT_REMOVE_END */
 };
 /* END CONFIG */
@@ -34,7 +34,7 @@ var nicEditorColorButton = nicEditorAdvancedButton.extend({
 			clrs=colorList[row].split(' ');
 			for(var b=0;b<clrs.length;b++) {
 				var colorCode = '#'+clrs[b];
-						
+
 						var colorSquare = new bkElement('DIV').setStyle({'cursor' : 'pointer', 'height' : '15px', 'float' : 'left'}).appendTo(colorItems);
 						var colorBorder = new bkElement('DIV').setStyle({border: '2px solid '+colorCode}).appendTo(colorSquare);
 						var colorInner = new bkElement('DIV').setStyle({backgroundColor : colorCode, overflow : 'hidden', width : '11px', height : '11px'}).addEvent('click',this.colorSelect.closure(this,colorCode)).addEvent('mouseover',this.on.closure(this,colorBorder)).addEvent('mouseout',this.off.closure(this,colorBorder,colorCode)).appendTo(colorBorder);

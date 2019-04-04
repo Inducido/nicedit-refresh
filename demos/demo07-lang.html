@@ -1,0 +1,30 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+	<title>Demo 7 : Custom lang file</title>
+</head>
+<body>
+
+<div id="menu"></div>
+
+<div id="intro">
+This makes uses of french language file
+</div>
+<br />
+
+<div id="sample">
+<script type="text/javascript" src="../l10n/nicedit.fr.js"></script>
+<script type="text/javascript" src="../dist/nicedit.js"></script>
+<script type="text/javascript">
+	bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+</script>
+
+<h4>First Textarea</h4>
+<textarea name="area1" cols="40">
+By calling the nicEditors.allTextareas() function the below example replaces all 3 textareas on the page with nicEditors. NicEditors will match the size of the editor window with the size of the textarea it replaced.
+</textarea>
+
+</div>
+
+</body>
+</html>
