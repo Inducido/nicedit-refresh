@@ -37,6 +37,7 @@ var nicEditorConfig = bkClass.extend({
 		// old calculation (take width at creation)
 		//return (parseInt(e.getStyle('width')) || e.clientWidth)+'px';
 	},
+	//initWithLineBreak: true, //removed, became useless
 
 	//outline of the editor when it gets focus (blue by default) - comment to keep default bahavior
 	editor_outlineColor:'white',         //not visible

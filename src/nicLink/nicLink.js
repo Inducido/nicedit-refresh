@@ -38,13 +38,21 @@ var nicLinkButton = nicEditorAdvancedButton.extend({
 			var tmp = 'javascript:nicTemp();';
 			this.ne.nicCommand("createlink",tmp);
 			this.ln = this.findElm('A','href',tmp);
+			if (this.ln.innerHTML == tmp) {
+				this.ln.innerHTML = this.inputs['title'].value || url;
+			}
 		}
 		if(this.ln) {
+			var oldTitle = this.ln.title;
 			this.ln.setAttributes({
 				href : this.inputs['href'].value,
 				title : this.inputs['title'].value,
 				target : this.inputs['target'].options[this.inputs['target'].selectedIndex].value
 			});
+			// set the link text to the title or the url if the old text was the old title
+			if (this.ln.innerHTML == oldTitle) {
+				this.ln.innerHTML = this.inputs['title'].value || this.inputs['href'].value;
+			}
 		}
 	}
 });

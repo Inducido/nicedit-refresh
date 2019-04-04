@@ -43,8 +43,8 @@ var nicEditor = bkClass.extend({
 	construct : function(o) {
 		this.options = new nicEditorConfig();
 		bkExtend(this.options,o);
-		this.nicInstances = new Array();
-		this.loadedPlugins = new Array();
+		this.nicInstances = [];
+		this.loadedPlugins = [];
 
 		var plugins = nicEditors.nicPlugins;
 		for(var i=0;i<plugins.length;i++) {
@@ -74,11 +74,7 @@ var nicEditor = bkClass.extend({
 	addInstance : function(e,o) {
 		e = this.checkReplace($BK(e));
     	if(e){
-				if( e.contentEditable || !!window.opera ) {
-					var newInstance = new nicEditorInstance(e,o,this);
-				} else {
-					var newInstance = new nicEditorIFrameInstance(e,o,this);
-			}
+			var newInstance =( e.contentEditable || !!window.opera )?new nicEditorInstance(e,o,this) : new nicEditorIFrameInstance(e,o,this);
 			this.nicInstances.push(newInstance);
 		}
 		return this;
@@ -131,7 +127,11 @@ var nicEditor = bkClass.extend({
 		var icon = this.options.iconList[iconName];
 		// icon from individual image file
 		var file = (options.iconFiles) ? options.iconFiles[iconName] : '';
-		return {backgroundImage : "url('"+((icon) ? this.options.iconsPath : this.options.iconsPath+'/'+file)+"')", backgroundPosition : ((icon) ? ((icon-1)*-18) : 0)+'px 0px'};
+
+		return {
+			backgroundImage : "url('"+((icon) ? this.options.iconsPath : this.options.iconsPath+'/'+file)+"')",
+			backgroundPosition : ((icon) ? ((icon-1)*-18) : 0)+'px 0px'
+		};
 	},
 
 	selectCheck : function(e,t) {

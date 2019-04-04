@@ -29,7 +29,7 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 		this.pane.append(this.form);
 		this.inputs = {};
 
-		for(itm in f) {
+		for(var itm in f) {
 			var field = f[itm];
 			var val = '';
 			if(elm) {
@@ -54,7 +54,7 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 						break;
 					case 'select':
 						this.inputs[itm] = new bkElement('select').setAttributes({id : itm}).setStyle({border : '1px solid #ccc', 'float' : 'left', margin : '2px 0'}).appendTo(contain);
-						for(opt in field.options) {
+						for(var opt in field.options) {
 							var o = new bkElement('option').setAttributes({value : opt, selected : (opt == val) ? 'selected' : ''}).setContent(field.options[opt]).appendTo(this.inputs[itm]);
 						}
 						break;

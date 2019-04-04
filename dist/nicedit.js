@@ -171,7 +171,7 @@ var bkLib = {
 		return s.replace(/\-(.)/g, function(m, l){return l.toUpperCase()});
 	},
 	inArray : function(arr,item) {
-	    return (bkLib.search(arr,item) != null);
+	    return (bkLib.search(arr,item) !== null);
 	},
 	search : function(arr,itm) {
 		for(var i=0; i < arr.length; i++) {
@@ -246,9 +246,9 @@ Function.prototype.closure = function() {
 Function.prototype.closureListener = function() {
   	var __method = this, args = bkLib.toArray(arguments), object = args.shift();
   	return function(e) {
-  	e = e || window.event;
-  	if(e.target) { var target = e.target; } else { var target =  e.srcElement };
-	  	return __method.apply(object, [e,target].concat(args) );
+		e = e || window.event;
+		var target = e.target? e.target: e.srcElement ;
+		return __method.apply(object, [e,target].concat(args) );
 	};
 }
 
@@ -275,6 +275,8 @@ var nicEditorConfig = bkClass.extend({
 	},
 	//sprites single image path: used in combination with iconList
 	//iconsPath : /* NICEDIT_ICONSPATH_START */'nicEditorIcons.gif'/* NICEDIT_ICONSPATH_END */,
+
+	//when no sprites are defined (in iconList), iconsPath is used to get root path to the icons
 	iconsPath : "../icons",
 
 	buttonList : ['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink','forecolor','bgcolor'],
@@ -287,9 +289,10 @@ var nicEditorConfig = bkClass.extend({
 	getEditorWidth: function(e)
 	{
 		return '100%';
-		// old calculation (take width at creation
+		// old calculation (take width at creation)
 		//return (parseInt(e.getStyle('width')) || e.clientWidth)+'px';
 	},
+	//initWithLineBreak: true, //removed, became useless
 
 	//outline of the editor when it gets focus (blue by default) - comment to keep default bahavior
 	editor_outlineColor:'white',         //not visible
@@ -348,8 +351,8 @@ var nicEditor = bkClass.extend({
 	construct : function(o) {
 		this.options = new nicEditorConfig();
 		bkExtend(this.options,o);
-		this.nicInstances = new Array();
-		this.loadedPlugins = new Array();
+		this.nicInstances = [];
+		this.loadedPlugins = [];
 
 		var plugins = nicEditors.nicPlugins;
 		for(var i=0;i<plugins.length;i++) {
@@ -379,11 +382,7 @@ var nicEditor = bkClass.extend({
 	addInstance : function(e,o) {
 		e = this.checkReplace($BK(e));
     	if(e){
-				if( e.contentEditable || !!window.opera ) {
-					var newInstance = new nicEditorInstance(e,o,this);
-				} else {
-					var newInstance = new nicEditorIFrameInstance(e,o,this);
-			}
+			var newInstance =( e.contentEditable || !!window.opera )?new nicEditorInstance(e,o,this) : new nicEditorIFrameInstance(e,o,this);
 			this.nicInstances.push(newInstance);
 		}
 		return this;
@@ -418,6 +417,7 @@ var nicEditor = bkClass.extend({
 		}
 	},
 
+	// panel = toolbar with icons
 	setPanel : function(e) {
 		this.nicPanel = new nicEditorPanel($BK(e),this.options,this);
 		this.fireEvent('panel',this.nicPanel);
@@ -435,7 +435,11 @@ var nicEditor = bkClass.extend({
 		var icon = this.options.iconList[iconName];
 		// icon from individual image file
 		var file = (options.iconFiles) ? options.iconFiles[iconName] : '';
-		return {backgroundImage : "url('"+((icon) ? this.options.iconsPath : this.options.iconsPath+'/'+file)+"')", backgroundPosition : ((icon) ? ((icon-1)*-18) : 0)+'px 0px'};
+
+		return {
+			backgroundImage : "url('"+((icon) ? this.options.iconsPath : this.options.iconsPath+'/'+file)+"')",
+			backgroundPosition : ((icon) ? ((icon-1)*-18) : 0)+'px 0px'
+		};
 	},
 
 	selectCheck : function(e,t) {
@@ -470,8 +474,8 @@ var nicEditorInstance = bkClass.extend({
 		this.elm = this.e = e;
 		this.options = options || {};
 
-		newX = parseInt(e.getStyle('width')) || e.clientWidth;
-		newY = parseInt(e.getStyle('height')) || e.clientHeight;
+		var newX = parseInt(e.getStyle('width'), 10) || e.clientWidth;
+		var newY = parseInt(e.getStyle('height'), 10) || e.clientHeight;
 		this.initialHeight = newY-8;
 
 		var isTextarea = (e.nodeName.toLowerCase() == "textarea");
@@ -507,9 +511,10 @@ var nicEditorInstance = bkClass.extend({
 
 	init : function() {
 		this.elm.setAttribute('contentEditable','true');
-		if(this.getContent() == "") {
-			this.setContent('<br />');
-		}
+		//this returns <br> when initial content is empty
+		//if (this.getContent() == "" && this.options.initWithLineBreak) {
+		//	this.setContent('<br />');
+		//}
 		this.instanceDoc = document.defaultView;
 		this.elm.addEvent('mousedown',this.selected.closureListener(this)).addEvent('keypress',this.keyDown.closureListener(this)).addEvent('focus',this.selected.closure(this)).addEvent('blur',this.blur.closure(this)).addEvent('keyup',this.selected.closure(this));
 		this.ne.fireEvent('add',this);
@@ -536,12 +541,15 @@ var nicEditorInstance = bkClass.extend({
 
 	getRng : function() {
 		var s = this.getSel();
-		if(!s || s.rangeCount === 0) { return; }
+		if(!s || s.rangeCount === 0) { return null; }
 
 		//an exception can occur when on a double click some text gets selected unintentionally
 		try{
 			//return (s.rangeCount > 0) ? s.getRangeAt(0) : s.createRange();
 			return (s.rangeCount > 0) ? s.getRangeAt(0) : s.addRange();
+			//or ? //to be checked again
+			//return (s.rangeCount > 0) ? s.getRangeAt(0) :      s.createRange && s.createRange() || document.createRange();
+
 		}
 		catch(e){}
 	},
@@ -588,6 +596,8 @@ var nicEditorInstance = bkClass.extend({
 	},
 
 	keyDown : function(e,t) {
+		this.ne.fireEvent('keyDown', this, e);
+
 		if(e.ctrlKey) {
 			this.ne.fireEvent('key',this,e);
 		}
@@ -650,7 +660,11 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
 	init : function() {	
 		var c = this.elm.innerHTML.replace(/^\s+|\s+$/g, '');
 		this.elm.innerHTML = '';
-		(!c) ? c = "<br />" : c;
+
+		//this returns <br> when initial content is empty
+		//if(this.options.initWithLineBreak)
+		//(!c) ? c = "<br />" : c;
+
 		this.initialContent = c;
 		
 		this.elmFrame = new bkElement('iframe').setAttributes({'src' : 'javascript:;', 'frameBorder' : 0, 'allowTransparency' : 'true', 'scrolling' : 'no'}).setStyle({height: '100px', width: '100%'}).addClass('frame').appendTo(this.elm);
@@ -658,7 +672,7 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
 		if(this.copyElm) { this.elmFrame.setStyle({width : (this.elm.offsetWidth-4)+'px'}); }
 		
 		var styleList = ['font-size','font-family','font-weight','color'];
-		for(itm in styleList) {
+		for(var itm in styleList) {
 			this.savedStyles[bkLib.camelize(itm)] = this.elm.getStyle(itm);
 		}
      	
@@ -713,12 +727,13 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
 
 	
 });
+
 var nicEditorPanel = bkClass.extend({
 	construct : function(e,options,nicEditor) {
 		this.elm = e;
 		this.options = options;
 		this.ne = nicEditor;
-		this.panelButtons = new Array();
+		this.panelButtons = [];
 		this.buttonList = bkExtend([],this.ne.options.buttonList);
 		
 		this.panelContain = new bkElement('DIV').setStyle({overflow : 'hidden', width : '100%', border : '1px solid #cccccc', backgroundColor : '#efefef'}).addClass('panelContain');
@@ -727,7 +742,7 @@ var nicEditorPanel = bkClass.extend({
 
 		var opt = this.ne.options;
 		var buttons = opt.buttons;
-		for(button in buttons) {
+		for(var button in buttons) {
 				this.addButton(button,opt,true);
 		}
 		this.reorder();
@@ -736,7 +751,18 @@ var nicEditorPanel = bkClass.extend({
 	
 	addButton : function(buttonName,options,noOrder) {
 		var button = options.buttons[buttonName];
+
 		var type = (button['type']) ? eval('(typeof('+button['type']+') == "undefined") ? null : '+button['type']+';') : nicEditorButton;
+
+		/* To be tested to removed the eval
+		var type = null;
+		if (button['type']) {
+			type = typeof(window[button['type']]) === undefined ? null : window[button['type']];
+		} else {
+			type = nicEditorButton;
+		}
+		*/
+
 		var hasButton = bkLib.inArray(this.buttonList,buttonName);
 		if(type && (hasButton || this.ne.options.fullPanel)) {
 			this.panelButtons.push(new type(this.panelElm,buttonName,options,this.ne));
@@ -767,6 +793,11 @@ var nicEditorPanel = bkClass.extend({
 		this.elm.remove();
 	}
 });
+
+
+
+// icons in the panels
+
 var nicEditorButton = bkClass.extend({
 
 	construct : function(e,buttonName,options,nicEditor) {
@@ -775,10 +806,12 @@ var nicEditorButton = bkClass.extend({
 		this.ne = nicEditor;
 		this.elm = e;
 
+		var iconsize=20;
+
 		this.margin = new bkElement('DIV').setStyle({'float' : 'left', marginTop : '2px'}).appendTo(e);
-		this.contain = new bkElement('DIV').setStyle({width : '20px', height : '20px'}).addClass('buttonContain').appendTo(this.margin);
+		this.contain = new bkElement('DIV').setStyle({width : iconsize+"px", height : iconsize+"px"}).addClass('buttonContain').appendTo(this.margin);
 		this.border = new bkElement('DIV').setStyle({backgroundColor : '#efefef', border : '1px solid #efefef'}).appendTo(this.contain);
-		this.button = new bkElement('DIV').setStyle({width : '18px', height : '18px', overflow : 'hidden', zoom : 1, cursor : 'pointer'}).addClass('button').setStyle(this.ne.getIcon(buttonName,options)).appendTo(this.border);
+		this.button = new bkElement('DIV').setStyle({width : (iconsize-2)+"px", height : (iconsize-2)+"px", overflow : 'hidden', zoom : 1, cursor : 'pointer'}).addClass('button').setStyle(this.ne.getIcon(buttonName,options)).appendTo(this.border);
 		this.button.addEvent('mouseover', this.hoverOn.closure(this)).addEvent('mouseout',this.hoverOff.closure(this)).addEvent('mousedown',this.mouseClick.closure(this)).noSelect();
 
 		if(!window.opera) {
@@ -826,13 +859,13 @@ var nicEditorButton = bkClass.extend({
 				this.activate();
 				return true;
 			}
-		} while(elm = elm.parentNode && elm.className != "nicEdit");
+		} while((elm = elm.parentNode) && elm.className != "nicEdit");
 		elm = $BK(e);
 		while(elm.nodeType == 3) {
 			elm = $BK(elm.parentNode);
 		}
 		if(this.options.css) {
-			for(itm in this.options.css) {
+			for(var itm in this.options.css) {
 				if(elm.getStyle(itm,this.ne.selectedInstance.instanceDoc) == this.options.css[itm]) {
 					this.activate();
 					return true;
@@ -863,7 +896,9 @@ var nicEditorButton = bkClass.extend({
 		this.isDisabled = false;
 		this.contain.setStyle({'opacity' : 1}).addClass('buttonEnabled');
 		this.updateState();
-		this.checkNodes(t);
+		if (t !== document) {
+			this.checkNodes(t);
+		}
 	},
 
 	disable : function(ins,t) {
@@ -873,7 +908,7 @@ var nicEditorButton = bkClass.extend({
 	},
 
 	toggleActive : function() {
-		(this.isActive) ? this.deactivate() : this.activate();
+		this.isActive ? this.deactivate() : this.activate();
 	},
 
 	hoverOn : function() {
@@ -961,14 +996,14 @@ var nicEditorPane = bkClass.extend({
 		this.contain = new bkElement('div').setStyle({zIndex : '99999', overflow : 'hidden', position : 'absolute', left : this.pos[0]+'px', top : this.pos[1]+'px'})
 
 
-		if('toolTip_BoxClass' in this.ne.options)
+		if('is_tooltip' in options && 'toolTip_BoxClass' in this.ne.options)
 			this.contain.addClass('panebox'+' '+this.ne.options.toolTip_BoxClass);
 
 		//this add the option 'toolTip_Class' to add other css class (to avoid setting inline style)
-		if('toolTip_Class' in this.ne.options)
+		if('is_tooltip' in options && 'toolTip_Class' in this.ne.options)
 			this.pane = new bkElement('div').addClass('pane'+' '+this.ne.options.toolTip_Class).appendTo(this.contain);
 		else
-			this.pane = new bkElement('div').setStyle({fontSize : '12px', border : '1px solid #ccc', 'overflow': 'hidden', padding : '4px', textAlign: 'left', backgroundColor : '#ffffc9'}).addClass('pane').setStyle(options).appendTo(this.contain);
+			this.pane = new bkElement('div').setStyle({fontSize : '12px', border : '1px solid #ccc', overflow: 'hidden', padding : '4px', textAlign: 'left', backgroundColor : '#ffffc9'}).addClass('pane').setStyle(options).appendTo(this.contain);
 
 		if(openButton && !openButton.options.noClose) {
 			this.close = new bkElement('div').setStyle({'float' : 'right', height: '16px', width : '16px', cursor : 'pointer'}).setStyle(this.ne.getIcon('close',nicPaneOptions)).addEvent('mousedown',openButton.removePane.closure(this)).appendTo(this.pane);
@@ -1046,7 +1081,7 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 		this.pane.append(this.form);
 		this.inputs = {};
 
-		for(itm in f) {
+		for(var itm in f) {
 			var field = f[itm];
 			var val = '';
 			if(elm) {
@@ -1071,7 +1106,7 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 						break;
 					case 'select':
 						this.inputs[itm] = new bkElement('select').setAttributes({id : itm}).setStyle({border : '1px solid #ccc', 'float' : 'left', margin : '2px 0'}).appendTo(contain);
-						for(opt in field.options) {
+						for(var opt in field.options) {
 							var o = new bkElement('option').setAttributes({value : opt, selected : (opt == val) ? 'selected' : ''}).setContent(field.options[opt]).appendTo(this.inputs[itm]);
 						}
 						break;
@@ -1104,6 +1139,7 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 		}
 	}
 });
+
 /**
  * nicButtonTips
  * @description: Tooltips when buttons are moused over describing their function
@@ -1125,7 +1161,7 @@ var nicButtonTips = bkClass.extend({
 	create : function(button) {
 		this.timer = null;
 		if(!this.pane) {
-			this.pane = new nicEditorPane(button.button,this.ne,{fontSize : '12px', marginTop : '5px'});
+			this.pane = new nicEditorPane(button.button,this.ne,{is_tooltip:1, fontSize : '12px', marginTop : '5px'});
 			this.pane.setContent(button.options.name);
 		}		
 	},
@@ -1140,6 +1176,7 @@ var nicButtonTips = bkClass.extend({
 	}
 });
 nicEditors.registerPlugin(nicButtonTips);
+
 /**
  * NicEdit Select Boxes
  * @description: Provides base select box class and font family, font size, and heading selects
@@ -1165,7 +1202,7 @@ var nicEditorSelect = bkClass.extend({
 		this.elm = e;
 		this.ne = nicEditor;
 		this.name = buttonName;
-		this.selOptions = new Array();
+		this.selOptions = [];
 
 		this.margin = new bkElement('div').setStyle({'float' : 'left', margin : '2px 1px 0 1px'}).appendTo(this.elm);
 		this.contain = new bkElement('div').setStyle({width: '90px', height : '20px', cursor : 'pointer', overflow: 'hidden'}).addClass('selectContain').addEvent('click',this.toggle.closure(this)).appendTo(this.margin);
@@ -1203,7 +1240,7 @@ var nicEditorSelect = bkClass.extend({
 
 	toggle : function() {
 		if(!this.isDisabled) {
-			(this.pane) ? this.close() : this.open();
+			this.pane ? this.close() : this.open();
 		}
 	},
 
@@ -1212,7 +1249,7 @@ var nicEditorSelect = bkClass.extend({
 
 		for(var i=0;i<this.selOptions.length;i++) {
 			var opt = this.selOptions[i];
-			var itmContain = new bkElement('div').setStyle({overflow : 'hidden', borderBottom : '1px solid #ccc', width: '88px', textAlign : 'left', overflow : 'hidden', cursor : 'pointer'});
+			var itmContain = new bkElement('div').setStyle({overflow : 'hidden', borderBottom : '1px solid #ccc', width: '88px', textAlign : 'left', cursor : 'pointer'});
 			var itm = new bkElement('div').setStyle({padding : '0px 4px'}).setContent(opt[1]).appendTo(itmContain).noSelect();
 			itm.addEvent('click',this.update.closure(this,opt[0])).addEvent('mouseover',this.over.closure(this,itm)).addEvent('mouseout',this.out.closure(this,itm)).setAttributes('id',opt[0]);
 			this.pane.append(itmContain);
@@ -1251,7 +1288,7 @@ var nicEditorFontSizeSelect = nicEditorSelect.extend({
 	sel : {1 : '1&nbsp;(8pt)', 2 : '2&nbsp;(10pt)', 3 : '3&nbsp;(12pt)', 4 : '4&nbsp;(14pt)', 5 : '5&nbsp;(18pt)', 6 : '6&nbsp;(24pt)'},
 	init : function() {
 		this.setDisplay('Font&nbsp;Size...');
-		for(itm in this.sel) {
+		for(var itm in this.sel) {
 			this.add(itm,'<font size="'+itm+'">'+this.sel[itm]+'</font>');
 		}
 	}
@@ -1262,7 +1299,7 @@ var nicEditorFontFamilySelect = nicEditorSelect.extend({
 
 	init : function() {
 		this.setDisplay('Font&nbsp;Family...');
-		for(itm in this.sel) {
+		for(var itm in this.sel) {
 			this.add(itm,'<font face="'+itm+'">'+this.sel[itm]+'</font>');
 		}
 	}
@@ -1273,7 +1310,7 @@ var nicEditorFontFormatSelect = nicEditorSelect.extend({
 
 	init : function() {
 		this.setDisplay('Font&nbsp;Format...');
-		for(itm in this.sel) {
+		for(var itm in this.sel) {
 			var tag = itm.toUpperCase();
 			this.add('<'+tag+'>','<'+itm+' style="padding: 0px; margin: 0px;">'+this.sel[itm]+'</'+tag+'>');
 		}
@@ -1322,13 +1359,21 @@ var nicLinkButton = nicEditorAdvancedButton.extend({
 			var tmp = 'javascript:nicTemp();';
 			this.ne.nicCommand("createlink",tmp);
 			this.ln = this.findElm('A','href',tmp);
+			if (this.ln.innerHTML == tmp) {
+				this.ln.innerHTML = this.inputs['title'].value || url;
+			}
 		}
 		if(this.ln) {
+			var oldTitle = this.ln.title;
 			this.ln.setAttributes({
 				href : this.inputs['href'].value,
 				title : this.inputs['title'].value,
 				target : this.inputs['target'].options[this.inputs['target'].selectedIndex].value
 			});
+			// set the link text to the title or the url if the old text was the old title
+			if (this.ln.innerHTML == oldTitle) {
+				this.ln.innerHTML = this.inputs['title'].value || this.inputs['href'].value;
+			}
 		}
 	}
 });

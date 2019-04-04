@@ -23,7 +23,7 @@ var nicEditorSelect = bkClass.extend({
 		this.elm = e;
 		this.ne = nicEditor;
 		this.name = buttonName;
-		this.selOptions = new Array();
+		this.selOptions = [];
 
 		this.margin = new bkElement('div').setStyle({'float' : 'left', margin : '2px 1px 0 1px'}).appendTo(this.elm);
 		this.contain = new bkElement('div').setStyle({width: '90px', height : '20px', cursor : 'pointer', overflow: 'hidden'}).addClass('selectContain').addEvent('click',this.toggle.closure(this)).appendTo(this.margin);
@@ -61,7 +61,7 @@ var nicEditorSelect = bkClass.extend({
 
 	toggle : function() {
 		if(!this.isDisabled) {
-			(this.pane) ? this.close() : this.open();
+			this.pane ? this.close() : this.open();
 		}
 	},
 
@@ -70,7 +70,7 @@ var nicEditorSelect = bkClass.extend({
 
 		for(var i=0;i<this.selOptions.length;i++) {
 			var opt = this.selOptions[i];
-			var itmContain = new bkElement('div').setStyle({overflow : 'hidden', borderBottom : '1px solid #ccc', width: '88px', textAlign : 'left', overflow : 'hidden', cursor : 'pointer'});
+			var itmContain = new bkElement('div').setStyle({overflow : 'hidden', borderBottom : '1px solid #ccc', width: '88px', textAlign : 'left', cursor : 'pointer'});
 			var itm = new bkElement('div').setStyle({padding : '0px 4px'}).setContent(opt[1]).appendTo(itmContain).noSelect();
 			itm.addEvent('click',this.update.closure(this,opt[0])).addEvent('mouseover',this.over.closure(this,itm)).addEvent('mouseout',this.out.closure(this,itm)).setAttributes('id',opt[0]);
 			this.pane.append(itmContain);
@@ -109,7 +109,7 @@ var nicEditorFontSizeSelect = nicEditorSelect.extend({
 	sel : {1 : '1&nbsp;(8pt)', 2 : '2&nbsp;(10pt)', 3 : '3&nbsp;(12pt)', 4 : '4&nbsp;(14pt)', 5 : '5&nbsp;(18pt)', 6 : '6&nbsp;(24pt)'},
 	init : function() {
 		this.setDisplay('Font&nbsp;Size...');
-		for(itm in this.sel) {
+		for(var itm in this.sel) {
 			this.add(itm,'<font size="'+itm+'">'+this.sel[itm]+'</font>');
 		}
 	}
@@ -120,7 +120,7 @@ var nicEditorFontFamilySelect = nicEditorSelect.extend({
 
 	init : function() {
 		this.setDisplay('Font&nbsp;Family...');
-		for(itm in this.sel) {
+		for(var itm in this.sel) {
 			this.add(itm,'<font face="'+itm+'">'+this.sel[itm]+'</font>');
 		}
 	}
@@ -131,7 +131,7 @@ var nicEditorFontFormatSelect = nicEditorSelect.extend({
 
 	init : function() {
 		this.setDisplay('Font&nbsp;Format...');
-		for(itm in this.sel) {
+		for(var itm in this.sel) {
 			var tag = itm.toUpperCase();
 			this.add('<'+tag+'>','<'+itm+' style="padding: 0px; margin: 0px;">'+this.sel[itm]+'</'+tag+'>');
 		}

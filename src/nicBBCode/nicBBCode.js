@@ -13,7 +13,7 @@ var nicBBCode = bkClass.extend({
 			nicEditor.addEvent('set',this.bbSet.closure(this));
 			
 			var loadedPlugins = this.ne.loadedPlugins;
-			for(itm in loadedPlugins) {
+			for(var itm in loadedPlugins) {
 				if(loadedPlugins[itm].toXHTML) {
 					this.xhtml = loadedPlugins[itm];
 				}

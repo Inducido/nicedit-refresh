@@ -14,8 +14,8 @@ var nicEditorInstance = bkClass.extend({
 		this.elm = this.e = e;
 		this.options = options || {};
 
-		newX = parseInt(e.getStyle('width')) || e.clientWidth;
-		newY = parseInt(e.getStyle('height')) || e.clientHeight;
+		var newX = parseInt(e.getStyle('width'), 10) || e.clientWidth;
+		var newY = parseInt(e.getStyle('height'), 10) || e.clientHeight;
 		this.initialHeight = newY-8;
 
 		var isTextarea = (e.nodeName.toLowerCase() == "textarea");
@@ -52,7 +52,7 @@ var nicEditorInstance = bkClass.extend({
 	init : function() {
 		this.elm.setAttribute('contentEditable','true');
 		//this returns <br> when initial content is empty
-		//if(this.getContent() == "") {
+		//if (this.getContent() == "" && this.options.initWithLineBreak) {
 		//	this.setContent('<br />');
 		//}
 		this.instanceDoc = document.defaultView;
@@ -81,12 +81,15 @@ var nicEditorInstance = bkClass.extend({
 
 	getRng : function() {
 		var s = this.getSel();
-		if(!s || s.rangeCount === 0) { return; }
+		if(!s || s.rangeCount === 0) { return null; }
 
 		//an exception can occur when on a double click some text gets selected unintentionally
 		try{
 			//return (s.rangeCount > 0) ? s.getRangeAt(0) : s.createRange();
 			return (s.rangeCount > 0) ? s.getRangeAt(0) : s.addRange();
+			//or ? //to be checked again
+			//return (s.rangeCount > 0) ? s.getRangeAt(0) :      s.createRange && s.createRange() || document.createRange();
+
 		}
 		catch(e){}
 	},
@@ -133,6 +136,8 @@ var nicEditorInstance = bkClass.extend({
 	},
 
 	keyDown : function(e,t) {
+		this.ne.fireEvent('keyDown', this, e);
+
 		if(e.ctrlKey) {
 			this.ne.fireEvent('key',this,e);
 		}

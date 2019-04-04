@@ -28,7 +28,7 @@ var nicEditorPane = bkClass.extend({
 		if('is_tooltip' in options && 'toolTip_Class' in this.ne.options)
 			this.pane = new bkElement('div').addClass('pane'+' '+this.ne.options.toolTip_Class).appendTo(this.contain);
 		else
-			this.pane = new bkElement('div').setStyle({fontSize : '12px', border : '1px solid #ccc', 'overflow': 'hidden', padding : '4px', textAlign: 'left', backgroundColor : '#ffffc9'}).addClass('pane').setStyle(options).appendTo(this.contain);
+			this.pane = new bkElement('div').setStyle({fontSize : '12px', border : '1px solid #ccc', overflow: 'hidden', padding : '4px', textAlign: 'left', backgroundColor : '#ffffc9'}).addClass('pane').setStyle(options).appendTo(this.contain);
 
 		if(openButton && !openButton.options.noClose) {
 			this.close = new bkElement('div').setStyle({'float' : 'right', height: '16px', width : '16px', cursor : 'pointer'}).setStyle(this.ne.getIcon('close',nicPaneOptions)).addEvent('mousedown',openButton.removePane.closure(this)).appendTo(this.pane);

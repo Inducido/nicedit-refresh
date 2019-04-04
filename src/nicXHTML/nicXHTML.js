@@ -31,7 +31,7 @@ var nicXHTML = bkClass.extend({
 		var nType = n.nodeType;
 		var nName = n.nodeName.toLowerCase();
 		var nChild = n.hasChildNodes && n.hasChildNodes();
-		var extraNodes = new Array();
+		var extraNodes = [];
 		
 		switch(nType) {
 			case 1:
@@ -63,7 +63,7 @@ var nicXHTML = bkClass.extend({
 						switch(attributeName) {
 							case 'style':
 								var css = attributeValue.replace(/ /g,"");
-								for(itm in this.cssReplace) {
+								for(var itm in this.cssReplace) {
 									if(css.indexOf(itm) != -1) {
 										extraNodes.push(this.cssReplace[itm]);
 										css = css.replace(itm,'');
@@ -94,7 +94,7 @@ var nicXHTML = bkClass.extend({
 						txt += '<'+extraNodes[i]+'>';
 					}
 				
-					if(attrTxt == "" && nName == "span") {
+					if(attrTxt === "" && nName == "span") {
 						r = false;
 					}
 					if(r) {
@@ -143,4 +143,5 @@ var nicXHTML = bkClass.extend({
 		return txt;
 	}
 });
+
 nicEditors.registerPlugin(nicXHTML);

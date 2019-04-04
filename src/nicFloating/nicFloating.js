@@ -15,7 +15,7 @@ nicEditor = nicEditor.extend({
         
         reposition : function() {
                 var e = this.selectedInstance.e;
-                this.floating.setStyle({ width : (parseInt(e.getStyle('width')) || e.clientWidth)+'px' });
+                this.floating.setStyle({ width : (parseInt(e.getStyle('width'), 10) || e.clientWidth)+'px' });
                 var top = e.offsetTop-this.floating.offsetHeight;
                 if(top < 0) {
                         top = e.offsetTop+e.offsetHeight;

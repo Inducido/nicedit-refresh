@@ -1,3 +1,7 @@
+
+
+// icons in the panels
+
 var nicEditorButton = bkClass.extend({
 
 	construct : function(e,buttonName,options,nicEditor) {
@@ -6,10 +10,12 @@ var nicEditorButton = bkClass.extend({
 		this.ne = nicEditor;
 		this.elm = e;
 
+		var iconsize=20;
+
 		this.margin = new bkElement('DIV').setStyle({'float' : 'left', marginTop : '2px'}).appendTo(e);
-		this.contain = new bkElement('DIV').setStyle({width : '20px', height : '20px'}).addClass('buttonContain').appendTo(this.margin);
+		this.contain = new bkElement('DIV').setStyle({width : iconsize+"px", height : iconsize+"px"}).addClass('buttonContain').appendTo(this.margin);
 		this.border = new bkElement('DIV').setStyle({backgroundColor : '#efefef', border : '1px solid #efefef'}).appendTo(this.contain);
-		this.button = new bkElement('DIV').setStyle({width : '18px', height : '18px', overflow : 'hidden', zoom : 1, cursor : 'pointer'}).addClass('button').setStyle(this.ne.getIcon(buttonName,options)).appendTo(this.border);
+		this.button = new bkElement('DIV').setStyle({width : (iconsize-2)+"px", height : (iconsize-2)+"px", overflow : 'hidden', zoom : 1, cursor : 'pointer'}).addClass('button').setStyle(this.ne.getIcon(buttonName,options)).appendTo(this.border);
 		this.button.addEvent('mouseover', this.hoverOn.closure(this)).addEvent('mouseout',this.hoverOff.closure(this)).addEvent('mousedown',this.mouseClick.closure(this)).noSelect();
 
 		if(!window.opera) {
@@ -57,13 +63,13 @@ var nicEditorButton = bkClass.extend({
 				this.activate();
 				return true;
 			}
-		} while(elm = elm.parentNode && elm.className != "nicEdit");
+		} while((elm = elm.parentNode) && elm.className != "nicEdit");
 		elm = $BK(e);
 		while(elm.nodeType == 3) {
 			elm = $BK(elm.parentNode);
 		}
 		if(this.options.css) {
-			for(itm in this.options.css) {
+			for(var itm in this.options.css) {
 				if(elm.getStyle(itm,this.ne.selectedInstance.instanceDoc) == this.options.css[itm]) {
 					this.activate();
 					return true;
@@ -94,7 +100,9 @@ var nicEditorButton = bkClass.extend({
 		this.isDisabled = false;
 		this.contain.setStyle({'opacity' : 1}).addClass('buttonEnabled');
 		this.updateState();
-		this.checkNodes(t);
+		if (t !== document) {
+			this.checkNodes(t);
+		}
 	},
 
 	disable : function(ins,t) {
@@ -104,7 +112,7 @@ var nicEditorButton = bkClass.extend({
 	},
 
 	toggleActive : function() {
-		(this.isActive) ? this.deactivate() : this.activate();
+		this.isActive ? this.deactivate() : this.activate();
 	},
 
 	hoverOn : function() {

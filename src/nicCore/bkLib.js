@@ -162,7 +162,7 @@ var bkLib = {
 		return s.replace(/\-(.)/g, function(m, l){return l.toUpperCase()});
 	},
 	inArray : function(arr,item) {
-	    return (bkLib.search(arr,item) != null);
+	    return (bkLib.search(arr,item) !== null);
 	},
 	search : function(arr,itm) {
 		for(var i=0; i < arr.length; i++) {
@@ -237,9 +237,9 @@ Function.prototype.closure = function() {
 Function.prototype.closureListener = function() {
   	var __method = this, args = bkLib.toArray(arguments), object = args.shift();
   	return function(e) {
-  	e = e || window.event;
-  	if(e.target) { var target = e.target; } else { var target =  e.srcElement };
-	  	return __method.apply(object, [e,target].concat(args) );
+		e = e || window.event;
+		var target = e.target? e.target: e.srcElement ;
+		return __method.apply(object, [e,target].concat(args) );
 	};
 }
 

@@ -4,7 +4,11 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
 	init : function() {	
 		var c = this.elm.innerHTML.replace(/^\s+|\s+$/g, '');
 		this.elm.innerHTML = '';
-		(!c) ? c = "<br />" : c;
+
+		//this returns <br> when initial content is empty
+		//if(this.options.initWithLineBreak)
+		//(!c) ? c = "<br />" : c;
+
 		this.initialContent = c;
 		
 		this.elmFrame = new bkElement('iframe').setAttributes({'src' : 'javascript:;', 'frameBorder' : 0, 'allowTransparency' : 'true', 'scrolling' : 'no'}).setStyle({height: '100px', width: '100%'}).addClass('frame').appendTo(this.elm);
@@ -12,7 +16,7 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
 		if(this.copyElm) { this.elmFrame.setStyle({width : (this.elm.offsetWidth-4)+'px'}); }
 		
 		var styleList = ['font-size','font-family','font-weight','color'];
-		for(itm in styleList) {
+		for(var itm in styleList) {
 			this.savedStyles[bkLib.camelize(itm)] = this.elm.getStyle(itm);
 		}
      	
