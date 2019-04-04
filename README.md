@@ -2,18 +2,28 @@ nicedit-refresh
 ================
 
 A revamp of this lightweight wysiwyg editor from the full copy of NicEdit from it's svn ( http://svn.nicedit.com/trunk/ ).  
-...With a buildfile.  
 Fork of nicEdit attempting to fix some of the main issues and add a couple of features.
 
-Website: http://nicedit.com
+Official website: http://nicedit.com
 
 
 ## Why
 
 We have this legacy in one of our products.  
-It needs to be maintained.  
-And we refreshed it a bit so we share the code.
+So it still needs to be maintained.  
+And Along the years, we refreshed it so we share the code here in github.
 
+## Added features
+
+Here is what's different/new (mainly):
+
+- Now the editor resizes itself (width) using css style to use 100% of its container: 
+  This is useful when you resize window of when it is in a popup window. This behavior is configurable in options. 
+- Nicer color selection box 
+- Added possibility to style tooltips with user defined css classes (like qtip)
+- Lang support (l10n): still in global scope so the translate function has been renamed to avoid collisions
+- Added a build file (gulp, uglified with sourcemaps)  
+- Added demos
 
 ## Installing
 

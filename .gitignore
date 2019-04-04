@@ -3,3 +3,4 @@ node_modules
 .directory
 demos/src
 .idea
+*.min.js.map

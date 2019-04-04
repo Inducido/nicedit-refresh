@@ -1,9 +1,12 @@
  
  // Simplest build file / Nadir Boussoukaia
+ // uglified with sourcemaps
  
 var gulp = require('gulp'),  
-    concat = require('gulp-concat');  
-
+    concat = require('gulp-concat'),  
+    rename = require('gulp-rename'),
+    uglify = require('gulp-uglify'),
+    sourcemaps = require('gulp-sourcemaps');
 
 var configuration = {
     paths: {
@@ -46,8 +49,14 @@ var configuration = {
 
 gulp.task('scripts', function() {
   return gulp.src(configuration.paths.src.js)
+    .pipe(sourcemaps.init())
     .pipe(concat('nicedit.js'))
+    .pipe(gulp.dest('./dist/'))
+    .pipe(rename('nicedit.min.js'))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./dist/'));
+    
 });
 
 // copy icon images from the src folder to the demo folder

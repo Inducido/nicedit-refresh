@@ -21,6 +21,9 @@
   "homepage": "http://nicedit.com",
   "devDependencies": {
     "gulp": "3.*",
-    "gulp-concat": "*"
+    "gulp-concat": "*",
+    "gulp-rename": "*",
+    "gulp-uglify": "*",
+    "gulp-sourcemaps": "*"
   }
 }
