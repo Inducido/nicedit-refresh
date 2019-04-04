@@ -21,11 +21,11 @@ var nicEditorPane = bkClass.extend({
 		this.contain = new bkElement('div').setStyle({zIndex : '99999', overflow : 'hidden', position : 'absolute', left : this.pos[0]+'px', top : this.pos[1]+'px'})
 
 
-		if('toolTip_BoxClass' in this.ne.options)
+		if('is_tooltip' in options && 'toolTip_BoxClass' in this.ne.options)
 			this.contain.addClass('panebox'+' '+this.ne.options.toolTip_BoxClass);
 
 		//this add the option 'toolTip_Class' to add other css class (to avoid setting inline style)
-		if('toolTip_Class' in this.ne.options)
+		if('is_tooltip' in options && 'toolTip_Class' in this.ne.options)
 			this.pane = new bkElement('div').addClass('pane'+' '+this.ne.options.toolTip_Class).appendTo(this.contain);
 		else
 			this.pane = new bkElement('div').setStyle({fontSize : '12px', border : '1px solid #ccc', 'overflow': 'hidden', padding : '4px', textAlign: 'left', backgroundColor : '#ffffc9'}).addClass('pane').setStyle(options).appendTo(this.contain);

@@ -113,6 +113,7 @@ var nicEditor = bkClass.extend({
 		}
 	},
 
+	// panel = toolbar with icons
 	setPanel : function(e) {
 		this.nicPanel = new nicEditorPanel($BK(e),this.options,this);
 		this.fireEvent('panel',this.nicPanel);

@@ -19,7 +19,7 @@ var nicButtonTips = bkClass.extend({
 	create : function(button) {
 		this.timer = null;
 		if(!this.pane) {
-			this.pane = new nicEditorPane(button.button,this.ne,{fontSize : '12px', marginTop : '5px'});
+			this.pane = new nicEditorPane(button.button,this.ne,{is_tooltip:1, fontSize : '12px', marginTop : '5px'});
 			this.pane.setContent(button.options.name);
 		}		
 	},
